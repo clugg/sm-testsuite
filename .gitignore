@@ -1,0 +1,6 @@
+*.exe
+*.smx
+compile*
+
+addons/sourcemod/scripting/include/*.inc
+!addons/sourcemod/scripting/include/testsuite.inc
