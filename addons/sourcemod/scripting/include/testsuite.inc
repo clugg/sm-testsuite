@@ -43,16 +43,15 @@
 #endif
 
 #if _TEST_PROFILER_ENABLED
-Profiler __test_profiler = null;
+static Profiler __test_profiler = null;
 #endif
 
 /**
  * @section Test Sections
  */
 
-// test counts (reset per section)
-int __test_testsTotal = 0;
-int __test_testsPassed = 0;
+static int __test_testsTotal = 0;
+static int __test_testsPassed = 0;
 
 /**
  * Resets the test counters to 0 and outputs the section name to the server.
@@ -132,9 +131,8 @@ stock void Test_EndSection()
 
 typedef Test_Method = function void();
 
-// assert counts (reset per test)
-int __test_assertsTotal = 0;
-int __test_assertsPassed = 0;
+static int __test_assertsTotal = 0;
+static int __test_assertsPassed = 0;
 
 /**
  * Prepares the assert counts and prints the test name to server.
