@@ -28,7 +28,7 @@ First, you need to include the library:
 ### Sections
 A section begins with the name of the section and ends by outputting the summary result of all tests executed within that section. If you are using SourceMod 1.10 or later, your tests will automatically be profiled and the time it took to execute the tests will be outputted after the test results.
 
-```
+```c
 Test_StartSection("section name");
 // your tests here
 Test_EndSection();
