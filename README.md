@@ -58,7 +58,9 @@ Test_AssertNotNull("value", view_as<Handle>(1));
 Test_AssertEqual("matching int", 1, 1);
 Test_AssertNotEqual("non-matching int", 1, 2);
 Test_AssertFloatsEqual("float", 0.1, 0.1);
+Test_AssertFloatsNotEqual("float", 0.1, 0.2);
 Test_AssertStringsEqual("string", "hello", "hello");
+Test_AssertStringsNotEqual("string", "hello", "world");
 ```
 
 `Test_AssertFloatsEqual` accepts an optional fourth parameter to set the threshold under which floats are considered equal. This is used to combat [floating point errors](https://en.wikipedia.org/wiki/Floating_point_error_mitigation) and has been set to a sensible default.
@@ -94,7 +96,9 @@ void it_should_pass_all()
     Test_AssertEqual("value", 1, 1);
     Test_AssertNotEqual("value", 1, 2);
     Test_AssertFloatsEqual("value", 0.1, 0.1);
+    Test_AssertFloatsNotEqual("value", 0.1, 0.2);
     Test_AssertStringsEqual("value", "hello", "hello");
+    Test_AssertStringsNotEqual("value", "hello", "world");
     Test_Output("here is some information: %d", 1);
 }
 
@@ -107,7 +111,9 @@ void it_should_fail_all()
     Test_AssertEqual("value", 1, 2);
     Test_AssertNotEqual("value", 1, 1);
     Test_AssertFloatsEqual("value", 0.1, 0.2);
+    Test_AssertFloatsNotEqual("value", 0.1, 0.1);
     Test_AssertStringsEqual("value", "hello", "world");
+    Test_AssertStringsNotEqual("value", "hello", "hello");
     Test_Output("here is some information: %d", 1);
 }
 
@@ -124,7 +130,7 @@ public void OnPluginStart()
     Test_Run("it_should_pass_all", it_should_pass_all);
     Test_EndSection();
 
-    Test_SetBoxWidth(32);
+    Test_SetBoxWidth(42);
     Test_StartSection("failing section");
     Test_Run("it_should_fail_all", it_should_fail_all);
     Test_EndSection();
@@ -162,45 +168,51 @@ This plugin will produce the following output:
 |   [ ] value == 1                                             |
 |   [ ] value != 2                                             |
 |   [ ] value == 0.100000                                      |
+|   [ ] value != 0.200000                                      |
 |   [ ] value == "hello"                                       |
+|   [ ] value != "world"                                       |
 |   [=] here is some information: 1                            |
-| Assertions: 8 passed                                         |
+| Assertions: 10 passed                                        |
 | PASS                                                         |
 |                                                              |
 |--------------------------------------------------------------|
 | Tests: 2 passed                                              |
-| Time:  0.003369s                                             |
+| Time:  0.003881s                                             |
 |--------------------------------------------------------------|
 
-|------------------------------|
-|       failing section        |
-|------------------------------|
-|                              |
-| it_should_fail_all           |
-|   [!] value == true          |
-|   [=] value = false          |
-|   [!] value == false         |
-|   [=] value = true           |
-|   [!] value == null          |
-|   [=] value = 1              |
-|   [!] value != null          |
-|   [=] value = 0              |
-|   [!] value == 2             |
-|   [=] value = 1              |
-|   [!] value != 1             |
-|   [=] value = 1              |
-|   [!] value == 0.200000      |
-|   [=] value = 0.100000       |
-|   [!] value == "world"       |
-|   [=] value = "hello"        |
-|   [=] here is some information: 1 |
-| Assertions: 8 failed         |
-| FAIL!                        |
-|                              |
-|------------------------------|
-| Tests: 1 failed              |
-| Time:  0.003120s             |
-|------------------------------|
+|----------------------------------------|
+|            failing section             |
+|----------------------------------------|
+|                                        |
+| it_should_fail_all                     |
+|   [!] value == true                    |
+|   [=] value = false                    |
+|   [!] value == false                   |
+|   [=] value = true                     |
+|   [!] value == null                    |
+|   [=] value = 1                        |
+|   [!] value != null                    |
+|   [=] value = 0                        |
+|   [!] value == 2                       |
+|   [=] value = 1                        |
+|   [!] value != 1                       |
+|   [=] value = 1                        |
+|   [!] value == 0.200000                |
+|   [=] value = 0.100000                 |
+|   [!] value != 0.100000                |
+|   [=] value = 0.100000                 |
+|   [!] value == "world"                 |
+|   [=] value = "hello"                  |
+|   [!] value != "hello"                 |
+|   [=] value = "hello"                  |
+|   [=] here is some information: 1      |
+| Assertions: 10 failed                  |
+| FAIL!                                  |
+|                                        |
+|----------------------------------------|
+| Tests: 1 failed                        |
+| Time:  0.004211s                       |
+|----------------------------------------|
 
 |----------------------------------------|
 |              both section              |
@@ -214,9 +226,11 @@ This plugin will produce the following output:
 |   [ ] value == 1                       |
 |   [ ] value != 2                       |
 |   [ ] value == 0.100000                |
+|   [ ] value != 0.200000                |
 |   [ ] value == "hello"                 |
+|   [ ] value != "world"                 |
 |   [=] here is some information: 1      |
-| Assertions: 8 passed                   |
+| Assertions: 10 passed                  |
 | PASS                                   |
 |                                        |
 |----------------------------------------|
@@ -236,10 +250,14 @@ This plugin will produce the following output:
 |   [=] value = 1                        |
 |   [!] value == 0.200000                |
 |   [=] value = 0.100000                 |
+|   [!] value != 0.100000                |
+|   [=] value = 0.100000                 |
 |   [!] value == "world"                 |
 |   [=] value = "hello"                  |
+|   [!] value != "hello"                 |
+|   [=] value = "hello"                  |
 |   [=] here is some information: 1      |
-| Assertions: 8 failed                   |
+| Assertions: 10 failed                  |
 | FAIL!                                  |
 |                                        |
 |----------------------------------------|
@@ -253,7 +271,7 @@ This plugin will produce the following output:
 |                                        |
 |----------------------------------------|
 | Tests: 1 passed / 2 failed             |
-| Time:  0.003043s                       |
+| Time:  0.003348s                       |
 |----------------------------------------|
 
 |--------------------|

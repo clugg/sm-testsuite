@@ -531,6 +531,39 @@ stock bool Test_AssertFloatsEqual(
 }
 
 /**
+ * Asserts that two floats are not "equal" within a
+ * threshold to account for floating point errors.
+ * @see https://en.wikipedia.org/wiki/Floating_point_error_mitigation
+ *
+ * @param name          Name to output in assertion result.
+ * @param x             First value to compare.
+ * @param y             Second value to compare.
+ * @param threshold     Maximum allowed difference between floats.
+ * @returns             True if the floats are not equal within
+ *                      the threshold, false otherwise.
+ */
+stock bool Test_AssertFloatsNotEqual(
+    const char[] name,
+    float x,
+    float y,
+    float threshold = 0.0001
+)
+{
+    if (! Test_OutputAssertResult(
+        ! Test_FloatsEqual(x, y, threshold),
+        "%s != %f",
+        name,
+        y
+    )) {
+        Test_Output("%s = %f", name, x);
+
+        return false;
+    }
+
+    return true;
+}
+
+/**
  * Asserts that two strings are equal.
  *
  * @param name  Name to output in assertion result.
@@ -545,6 +578,29 @@ stock bool Test_AssertStringsEqual(
 )
 {
     if (! Test_OutputAssertResult(StrEqual(x, y), "%s == \"%s\"", name, y)) {
+        Test_Output("%s = \"%s\"", name, x);
+
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Asserts that two strings are not equal.
+ *
+ * @param name  Name to output in assertion result.
+ * @param x     First string to compare.
+ * @param y     Second string to compare.
+ * @returns     True if the strings are not equal, false otherwise.
+ */
+stock bool Test_AssertStringsNotEqual(
+    const char[] name,
+    const char[] x,
+    const char[] y
+)
+{
+    if (! Test_OutputAssertResult(! StrEqual(x, y), "%s != \"%s\"", name, y)) {
         Test_Output("%s = \"%s\"", name, x);
 
         return false;

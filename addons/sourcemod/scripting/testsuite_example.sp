@@ -59,7 +59,9 @@ void it_should_pass_all()
     Test_AssertEqual("value", 1, 1);
     Test_AssertNotEqual("value", 1, 2);
     Test_AssertFloatsEqual("value", 0.1, 0.1);
+    Test_AssertFloatsNotEqual("value", 0.1, 0.2);
     Test_AssertStringsEqual("value", "hello", "hello");
+    Test_AssertStringsNotEqual("value", "hello", "world");
     Test_Output("here is some information: %d", 1);
 }
 
@@ -72,7 +74,9 @@ void it_should_fail_all()
     Test_AssertEqual("value", 1, 2);
     Test_AssertNotEqual("value", 1, 1);
     Test_AssertFloatsEqual("value", 0.1, 0.2);
+    Test_AssertFloatsNotEqual("value", 0.1, 0.1);
     Test_AssertStringsEqual("value", "hello", "world");
+    Test_AssertStringsNotEqual("value", "hello", "hello");
     Test_Output("here is some information: %d", 1);
 }
 
@@ -89,7 +93,7 @@ public void OnPluginStart()
     Test_Run("it_should_pass_all", it_should_pass_all);
     Test_EndSection();
 
-    Test_SetBoxWidth(32);
+    Test_SetBoxWidth(42);
     Test_StartSection("failing section");
     Test_Run("it_should_fail_all", it_should_fail_all);
     Test_EndSection();
