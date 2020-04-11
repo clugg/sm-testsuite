@@ -162,7 +162,7 @@ stock bool Test_AfterRun()
 
     if (__test_assertionsTotal > 0) {
         char output[1024];
-        strcopy(output, sizeof(output), "Asserts: ");
+        strcopy(output, sizeof(output), "Assertions: ");
 
         int assertionsFailed = __test_assertionsTotal - __test_assertionsPassed;
 

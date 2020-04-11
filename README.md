@@ -126,7 +126,7 @@ it_should_pass_all
   [ ] float == 0.100000
   [ ] string == "hello"
   [=] here is some information: 1
-Asserts: 6 passed
+Assertions: 6 passed
 PASS
 
 Tests: 1 passed
@@ -137,7 +137,7 @@ Time:  0.001754s
 it_should_fail_all
   [!] matching int == 2
   [=] matching int = 1
-Asserts: 1 failed
+Assertions: 1 failed
 FAIL!
 
 Tests: 1 failed
@@ -153,20 +153,20 @@ it_should_pass_all
   [ ] float == 0.100000
   [ ] string == "hello"
   [=] here is some information: 1
-Asserts: 6 passed
+Assertions: 6 passed
 PASS
 
 it_should_fail_all
   [!] matching int == 2
   [=] matching int = 1
-Asserts: 1 failed
+Assertions: 1 failed
 FAIL!
 
 it_should_fail_some
   [!] matching int == 2
   [=] matching int = 1
   [ ] non-matching int != 2
-Asserts: 1 passed / 1 failed
+Assertions: 1 passed / 1 failed
 FAIL!
 
 Tests: 1 passed / 2 failed
