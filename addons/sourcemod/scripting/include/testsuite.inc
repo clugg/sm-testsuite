@@ -131,8 +131,8 @@ stock void Test_EndSection()
 
 typedef Test_Method = function void();
 
-static int __test_assertsTotal = 0;
-static int __test_assertsPassed = 0;
+static int __test_assertionsTotal = 0;
+static int __test_assertionsPassed = 0;
 
 /**
  * Prepares the assert counts and prints the test name to server.
@@ -141,8 +141,8 @@ static int __test_assertsPassed = 0;
  */
 stock void Test_BeforeRun(const char[] name)
 {
-    __test_assertsTotal = 0;
-    __test_assertsPassed = 0;
+    __test_assertionsTotal = 0;
+    __test_assertionsPassed = 0;
 
     PrintToServer("\n%s", name);
 }
@@ -158,9 +158,9 @@ stock bool Test_AfterRun()
         __test_testsPassed += 1;
     }
 
-    bool hasAsserts = __test_assertsTotal > 0;
-    bool hasPassedAsserts = __test_assertsPassed > 0;
-    bool hasFailedAsserts = __test_assertsPassed != __test_assertsTotal;
+    bool hasAsserts = __test_assertionsTotal > 0;
+    bool hasPassedAsserts = __test_assertionsPassed > 0;
+    bool hasFailedAsserts = __test_assertionsPassed != __test_assertionsTotal;
 
     char output[1024];
     strcopy(output, sizeof(output), "Asserts: ");
@@ -171,7 +171,7 @@ stock bool Test_AfterRun()
                 sizeof(output),
                 "%s%d passed",
                 output,
-                __test_assertsPassed
+                __test_assertionsPassed
             );
         }
 
@@ -185,7 +185,7 @@ stock bool Test_AfterRun()
                 sizeof(output),
                 "%s%d failed",
                 output,
-                __test_assertsTotal - __test_assertsPassed
+                __test_assertionsTotal - __test_assertionsPassed
             );
         }
     }
@@ -232,7 +232,7 @@ stock bool Test_RunFromString(const char[] name)
  */
 stock bool Test_IsPassing()
 {
-    return __test_assertsPassed == __test_assertsTotal;
+    return __test_assertionsPassed == __test_assertionsTotal;
 }
 
 /**
@@ -262,9 +262,9 @@ stock void Test_Output(const char[] message, any ...)
  */
 stock bool Test_OutputAssertResult(bool result, const char[] message, any ...)
 {
-    __test_assertsTotal += 1;
+    __test_assertionsTotal += 1;
     if (result) {
-        __test_assertsPassed += 1;
+        __test_assertionsPassed += 1;
     }
 
     char output[1024];
