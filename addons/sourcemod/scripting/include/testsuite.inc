@@ -47,7 +47,7 @@ static Profiler __test_profiler = null;
 #endif
 
 /**
- * @section Test Sections
+ * @section Sections
  */
 
 static int __test_testsTotal = 0;
@@ -126,7 +126,7 @@ stock void Test_EndSection()
 }
 
 /**
- * @section Test Calling
+ * @section Running Tests
  */
 
 typedef Test_Method = function void();
@@ -236,7 +236,7 @@ stock bool Test_IsPassing()
 }
 
 /**
- * @section Asserts
+ * @section Assertions
  */
 
 /**
