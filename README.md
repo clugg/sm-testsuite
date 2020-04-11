@@ -72,6 +72,11 @@ Test_Output("here is some information: %d", 1);
 ```c
 #include <testsuite>
 
+void it_has_no_asserts()
+{
+    Test_Output("I have no strong feelings one way or the other.");
+}
+
 void it_should_pass_all()
 {
     Test_AssertTrue("value", true);
@@ -97,6 +102,7 @@ void it_should_fail_some()
 public void OnPluginStart()
 {
     Test_StartSection("passing section");
+    Test_Run("it_has_no_asserts", it_has_no_asserts);
     Test_Run("it_should_pass_all", it_should_pass_all);
     Test_EndSection();
 
@@ -111,12 +117,20 @@ public void OnPluginStart()
     Test_Run("it_should_fail_all", it_should_fail_all);
     Test_Run("it_should_fail_some", it_should_fail_some);
     Test_EndSection();
+
+    PrintToServer("");
+    Test_StartSection("empty section");
+    Test_EndSection();
 }
 ```
 
 This plugin will produce the following output:
 ```
 | passing section
+
+it_has_no_asserts
+  [=] I have no strong feelings one way or the other.
+PASS
 
 it_should_pass_all
   [ ] value == true
@@ -129,8 +143,8 @@ it_should_pass_all
 Assertions: 6 passed
 PASS
 
-Tests: 1 passed
-Time:  0.001754s
+Tests: 2 passed
+Time:  0.002246s
 
 | failing section
 
@@ -141,7 +155,7 @@ Assertions: 1 failed
 FAIL!
 
 Tests: 1 failed
-Time:  0.000760s
+Time:  0.000723s
 
 | both section
 
@@ -170,7 +184,12 @@ Assertions: 1 passed / 1 failed
 FAIL!
 
 Tests: 1 passed / 2 failed
-Time:  0.003232s
+Time:  0.003108s
+
+| empty section
+
+No tests run!
+Time:  0.000000s
 ```
 
 The output is designed to be fairly simple and eye-catching for when assertions do fail.
