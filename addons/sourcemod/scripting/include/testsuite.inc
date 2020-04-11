@@ -160,14 +160,13 @@ stock bool Test_AfterRun()
         __test_testsPassed += 1;
     }
 
-    bool hasAsserts = __test_assertionsTotal > 0;
-    bool hasPassedAsserts = __test_assertionsPassed > 0;
-    bool hasFailedAsserts = __test_assertionsPassed != __test_assertionsTotal;
+    if (__test_assertionsTotal > 0) {
+        char output[1024];
+        strcopy(output, sizeof(output), "Asserts: ");
 
-    char output[1024];
-    strcopy(output, sizeof(output), "Asserts: ");
-    if (hasAsserts) {
-        if (hasPassedAsserts) {
+        int assertionsFailed = __test_assertionsTotal - __test_assertionsPassed;
+
+        if (__test_assertionsPassed > 0) {
             Format(
                 output,
                 sizeof(output),
@@ -175,24 +174,25 @@ stock bool Test_AfterRun()
                 output,
                 __test_assertionsPassed
             );
-        }
 
-        if (hasFailedAsserts) {
-            if (hasPassedAsserts) {
+            if (assertionsFailed > 0) {
                 StrCat(output, sizeof(output), " / ");
             }
+        }
 
+        if (assertionsFailed > 0) {
             Format(
                 output,
                 sizeof(output),
                 "%s%d failed",
                 output,
-                __test_assertionsTotal - __test_assertionsPassed
+                assertionsFailed
             );
         }
+
+        PrintToServer(output);
     }
 
-    PrintToServer(output);
     PrintToServer("%s", passed ? "PASS" : "FAIL!");
 
     return passed;
