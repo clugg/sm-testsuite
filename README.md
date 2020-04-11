@@ -35,12 +35,12 @@ Test_EndSection();
 ```
 
 ### Tests
-A test begins with the name of the teest and ends by outputting the summary result of all asserts within that test. All test methods must conform to the `Test_Method` typedef, which is simply a function which takes no parameters and returns nothing (void). You can run a test with a custom name, or let SourceMod resolve the test based on the name. *Note: when using name-based resolving, if you don't call the method anywhere else, you will get an unused symbol warning.*
+A test begins with the name of the test and ends by outputting the summary result of all assertions within that test. All test methods must conform to the `Test_Method` typedef, which is simply a function which takes no parameters and returns nothing (void). You can run a test with a custom name, or let SourceMod resolve the test based on the name. *Note: when using name-based resolving, if you don't call the method anywhere else, you will get an unused symbol warning.*
 
 ```c
 void it_should_do_something()
 {
-    // your asserts here
+    // your assertions here
 }
 
 Test_Run("it_should_do_something", it_should_do_something);
@@ -49,7 +49,7 @@ Test_RunFromString("it_should_do_something");
 ```
 
 ### Assertions
-An assertion is a statement that something should be a certain way. There are multiple types of assertions. Every assertion method accepts a name as the first parameter to make your test output more human readable. Every assertion you make will count towards the total asserts made in an individual test, and a single failed assertion means the entire test is considered failed. When an assertion fails, the value of the variable being asserted against will be outputted as information. *Note: when an assertion fails, the function will continue executing unless you explicitly stop it.*
+An assertion is a statement that something should be a certain way. There are multiple types of assertions. Every assertion method accepts a name as the first parameter to make your test output more human readable. Every assertion you make will count towards the total assertions made in an individual test, and a single failed assertion means the entire test is considered failed. When an assertion fails, the value of the variable being asserted against will be outputted as information. *Note: when an assertion fails, the function will continue executing unless you explicitly stop it.*
 ```c
 Test_AssertTrue("value", true);
 Test_AssertFalse("value", false);
