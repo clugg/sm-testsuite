@@ -91,10 +91,10 @@ void it_should_pass_all()
     Test_AssertFalse("value", false);
     Test_AssertNull("value", null);
     Test_AssertNotNull("value", view_as<Handle>(1));
-    Test_AssertEqual("matching int", 1, 1);
-    Test_AssertNotEqual("non-matching int", 1, 2);
-    Test_AssertFloatsEqual("float", 0.1, 0.1);
-    Test_AssertStringsEqual("string", "hello", "hello");
+    Test_AssertEqual("value", 1, 1);
+    Test_AssertNotEqual("value", 1, 2);
+    Test_AssertFloatsEqual("value", 0.1, 0.1);
+    Test_AssertStringsEqual("value", "hello", "hello");
     Test_Output("here is some information: %d", 1);
 }
 
@@ -104,10 +104,10 @@ void it_should_fail_all()
     Test_AssertFalse("value", true);
     Test_AssertNull("value", view_as<Handle>(1));
     Test_AssertNotNull("value", null);
-    Test_AssertEqual("matching int", 1, 2);
-    Test_AssertNotEqual("non-matching int", 1, 1);
-    Test_AssertFloatsEqual("float", 0.1, 0.2);
-    Test_AssertStringsEqual("string", "hello", "world");
+    Test_AssertEqual("value", 1, 2);
+    Test_AssertNotEqual("value", 1, 1);
+    Test_AssertFloatsEqual("value", 0.1, 0.2);
+    Test_AssertStringsEqual("value", "hello", "world");
     Test_Output("here is some information: %d", 1);
 }
 
@@ -159,17 +159,17 @@ This plugin will produce the following output:
 |   [ ] value == false                                         |
 |   [ ] value == null                                          |
 |   [ ] value != null                                          |
-|   [ ] matching int == 1                                      |
-|   [ ] non-matching int != 2                                  |
-|   [ ] float == 0.100000                                      |
-|   [ ] string == "hello"                                      |
+|   [ ] value == 1                                             |
+|   [ ] value != 2                                             |
+|   [ ] value == 0.100000                                      |
+|   [ ] value == "hello"                                       |
 |   [=] here is some information: 1                            |
 | Assertions: 8 passed                                         |
 | PASS                                                         |
 |                                                              |
 |--------------------------------------------------------------|
 | Tests: 2 passed                                              |
-| Time:  0.003711s                                             |
+| Time:  0.003369s                                             |
 |--------------------------------------------------------------|
 
 |------------------------------|
@@ -185,21 +185,21 @@ This plugin will produce the following output:
 |   [=] value = 1              |
 |   [!] value != null          |
 |   [=] value = 0              |
-|   [!] matching int == 2      |
-|   [=] matching int = 1       |
-|   [!] non-matching int != 1  |
-|   [=] non-matching int = 1   |
-|   [!] float == 0.200000      |
-|   [=] float = 0.100000       |
-|   [!] string == "world"      |
-|   [=] string = "hello"       |
+|   [!] value == 2             |
+|   [=] value = 1              |
+|   [!] value != 1             |
+|   [=] value = 1              |
+|   [!] value == 0.200000      |
+|   [=] value = 0.100000       |
+|   [!] value == "world"       |
+|   [=] value = "hello"        |
 |   [=] here is some information: 1 |
 | Assertions: 8 failed         |
 | FAIL!                        |
 |                              |
 |------------------------------|
 | Tests: 1 failed              |
-| Time:  0.003216s             |
+| Time:  0.003120s             |
 |------------------------------|
 
 |----------------------------------------|
@@ -211,10 +211,10 @@ This plugin will produce the following output:
 |   [ ] value == false                   |
 |   [ ] value == null                    |
 |   [ ] value != null                    |
-|   [ ] matching int == 1                |
-|   [ ] non-matching int != 2            |
-|   [ ] float == 0.100000                |
-|   [ ] string == "hello"                |
+|   [ ] value == 1                       |
+|   [ ] value != 2                       |
+|   [ ] value == 0.100000                |
+|   [ ] value == "hello"                 |
 |   [=] here is some information: 1      |
 | Assertions: 8 passed                   |
 | PASS                                   |
@@ -230,14 +230,14 @@ This plugin will produce the following output:
 |   [=] value = 1                        |
 |   [!] value != null                    |
 |   [=] value = 0                        |
-|   [!] matching int == 2                |
-|   [=] matching int = 1                 |
-|   [!] non-matching int != 1            |
-|   [=] non-matching int = 1             |
-|   [!] float == 0.200000                |
-|   [=] float = 0.100000                 |
-|   [!] string == "world"                |
-|   [=] string = "hello"                 |
+|   [!] value == 2                       |
+|   [=] value = 1                        |
+|   [!] value != 1                       |
+|   [=] value = 1                        |
+|   [!] value == 0.200000                |
+|   [=] value = 0.100000                 |
+|   [!] value == "world"                 |
+|   [=] value = "hello"                  |
 |   [=] here is some information: 1      |
 | Assertions: 8 failed                   |
 | FAIL!                                  |
@@ -253,7 +253,7 @@ This plugin will produce the following output:
 |                                        |
 |----------------------------------------|
 | Tests: 1 passed / 2 failed             |
-| Time:  0.002072s                       |
+| Time:  0.003043s                       |
 |----------------------------------------|
 
 |--------------------|
