@@ -87,14 +87,13 @@ stock void Test_EndSection()
     __test_profiler.Stop();
     #endif
 
-    bool hasTests = __test_testsTotal > 0;
-    bool hasPassedTests = __test_testsPassed > 0;
-    bool hasFailedTests = __test_testsPassed != __test_testsTotal;
-
     char output[1024];
-    strcopy(output, sizeof(output), "\nTests: ");
-    if (hasTests) {
-        if (hasPassedTests) {
+    if (__test_testsTotal > 0) {
+        strcopy(output, sizeof(output), "Tests: ");
+
+        int testsFailed = __test_testsTotal - __test_testsPassed;
+
+        if (__test_testsPassed > 0) {
             Format(
                 output,
                 sizeof(output),
@@ -102,25 +101,26 @@ stock void Test_EndSection()
                 output,
                 __test_testsPassed
             );
-        }
 
-        if (hasFailedTests) {
-            if (hasPassedTests) {
+            if (testsFailed > 0) {
                 StrCat(output, sizeof(output), " / ");
             }
+        }
 
+        if (testsFailed > 0) {
             Format(
                 output,
                 sizeof(output),
                 "%s%d failed",
                 output,
-                __test_testsTotal - __test_testsPassed
+                testsFailed
             );
         }
     } else {
-        strcopy(output, sizeof(output), "\nNo tests run!");
+        strcopy(output, sizeof(output), "No tests run!");
     }
 
+    PrintToServer("");
     PrintToServer(output);
     #if _TEST_PROFILER_ENABLED
     PrintToServer("Time:  %fs", __test_profiler.Time);
