@@ -317,8 +317,8 @@ stock bool Test_Run(const char[] name, Test_Method method)
 /**
  * Resolves the function based on the provided name and executes Test_Run.
  *
- * @param name      Name of test to run.
- * @returns         True if all test assertions passed, false otherwise.
+ * @param name  Name of test to run.
+ * @returns     True if all test assertions passed, false otherwise.
  */
 stock bool Test_RunFromString(const char[] name)
 {
@@ -377,9 +377,9 @@ stock bool Test_OutputAssertResult(bool result, const char[] message, any ...)
 /**
  * Asserts that the value is true.
  *
- * @param name          Name to output in assertion result.
- * @param x             Value to compare.
- * @returns             True if the value is true, false otherwise.
+ * @param name  Name to output in assertion result.
+ * @param x     Value to compare.
+ * @returns     True if the value is true, false otherwise.
  */
 stock bool Test_AssertTrue(const char[] name, any x)
 {
@@ -395,9 +395,9 @@ stock bool Test_AssertTrue(const char[] name, any x)
 /**
  * Asserts that the value is false.
  *
- * @param name          Name to output in assertion result.
- * @param x             Value to compare.
- * @returns             True if the value is false, false otherwise.
+ * @param name  Name to output in assertion result.
+ * @param x     Value to compare.
+ * @returns     True if the value is false, false otherwise.
  */
 stock bool Test_AssertFalse(const char[] name, any x)
 {
@@ -413,9 +413,9 @@ stock bool Test_AssertFalse(const char[] name, any x)
 /**
  * Asserts that the value is null.
  *
- * @param name          Name to output in assertion result.
- * @param x             Value to compare.
- * @returns             True if the value is null, false otherwise.
+ * @param name  Name to output in assertion result.
+ * @param x     Value to compare.
+ * @returns     True if the value is null, false otherwise.
  */
 stock bool Test_AssertNull(const char[] name, Handle x)
 {
@@ -431,9 +431,9 @@ stock bool Test_AssertNull(const char[] name, Handle x)
 /**
  * Asserts that the value is not null.
  *
- * @param name          Name to output in assertion result.
- * @param x             Value to compare.
- * @returns             True if the value is not null, false otherwise.
+ * @param name  Name to output in assertion result.
+ * @param x     Value to compare.
+ * @returns     True if the value is not null, false otherwise.
  */
 stock bool Test_AssertNotNull(const char[] name, Handle x)
 {
@@ -449,10 +449,10 @@ stock bool Test_AssertNotNull(const char[] name, Handle x)
 /**
  * Asserts that two values are equal.
  *
- * @param name          Name to output in assertion result.
- * @param x             First value to compare.
- * @param y             Second value to compare.
- * @returns             True if the values are equal, false otherwise.
+ * @param name  Name to output in assertion result.
+ * @param x     First value to compare.
+ * @param y     Second value to compare.
+ * @returns     True if the values are equal, false otherwise.
  */
 stock bool Test_AssertEqual(const char[] name, any x, any y)
 {
@@ -468,10 +468,10 @@ stock bool Test_AssertEqual(const char[] name, any x, any y)
 /**
  * Asserts that two values are not equal.
  *
- * @param name          Name to output in assertion result.
- * @param x             First value to compare.
- * @param y             Second value to compare.
- * @returns             True if the values are not equal, false otherwise.
+ * @param name  Name to output in assertion result.
+ * @param x     First value to compare.
+ * @param y     Second value to compare.
+ * @returns     True if the values are not equal, false otherwise.
  */
 stock bool Test_AssertNotEqual(const char[] name, any x, any y)
 {
@@ -493,7 +493,8 @@ stock bool Test_AssertNotEqual(const char[] name, any x, any y)
  * @param x             First value to compare.
  * @param y             Second value to compare.
  * @param tolerance     Maximum allowed difference between floats.
- * @returns True if the floats are equal within the threshold, false otherwise.
+ * @returns             True if the floats are equal within
+ *                      the threshold, false otherwise.
  */
 stock bool Test_AssertFloatsEqual(
     const char[] name,
@@ -522,10 +523,10 @@ stock bool Test_AssertFloatsEqual(
 /**
  * Asserts that two strings are equal.
  *
- * @param name          Name to output in assertion result.
- * @param x             First string to compare.
- * @param y             Second string to compare.
- * @returns True if the strings are equal, false otherwise.
+ * @param name  Name to output in assertion result.
+ * @param x     First string to compare.
+ * @param y     Second string to compare.
+ * @returns     True if the strings are equal, false otherwise.
  */
 stock bool Test_AssertStringsEqual(
     const char[] name,
