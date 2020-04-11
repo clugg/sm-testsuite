@@ -411,6 +411,42 @@ stock bool Test_AssertFalse(const char[] name, any x)
 }
 
 /**
+ * Asserts that the value is null.
+ *
+ * @param name          Name to output in assertion result.
+ * @param x             Value to compare.
+ * @returns             True if the value is null, false otherwise.
+ */
+stock bool Test_AssertNull(const char[] name, Handle x)
+{
+    if (! Test_OutputAssertResult(x == null, "%s == null", name)) {
+        Test_Output("%s = %d", name, x);
+
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Asserts that the value is not null.
+ *
+ * @param name          Name to output in assertion result.
+ * @param x             Value to compare.
+ * @returns             True if the value is not null, false otherwise.
+ */
+stock bool Test_AssertNotNull(const char[] name, Handle x)
+{
+    if (! Test_OutputAssertResult(x != null, "%s != null", name)) {
+        Test_Output("%s = %d", name, x);
+
+        return false;
+    }
+
+    return true;
+}
+
+/**
  * Asserts that two values are equal.
  *
  * @param name          Name to output in assertion result.

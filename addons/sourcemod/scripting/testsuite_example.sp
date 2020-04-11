@@ -54,6 +54,8 @@ void it_should_pass_all()
 {
     Test_AssertTrue("value", true);
     Test_AssertFalse("value", false);
+    Test_AssertNull("value", null);
+    Test_AssertNotNull("value", view_as<Handle>(1));
     Test_AssertEqual("matching int", 1, 1);
     Test_AssertNotEqual("non-matching int", 1, 2);
     Test_AssertFloatsEqual("float", 0.1, 0.1);
@@ -65,6 +67,8 @@ void it_should_fail_all()
 {
     Test_AssertTrue("value", false);
     Test_AssertFalse("value", true);
+    Test_AssertNull("value", view_as<Handle>(1));
+    Test_AssertNotNull("value", null);
     Test_AssertEqual("matching int", 1, 2);
     Test_AssertNotEqual("non-matching int", 1, 1);
     Test_AssertFloatsEqual("float", 0.1, 0.2);
