@@ -484,6 +484,19 @@ stock bool Test_AssertNotEqual(const char[] name, any x, any y)
     return true;
 }
 
+stock bool Test_FloatsEqual(float x, float y, float threshold = 0.0001)
+{
+    if (x == y) {
+        return true;
+    }
+
+    if (y > (x - threshold) && y < (x + threshold)) {
+        return true;
+    }
+
+    return false;
+}
+
 /**
  * Asserts that two floats are "equal" within a
  * threshold to account for floating point errors.
@@ -492,7 +505,7 @@ stock bool Test_AssertNotEqual(const char[] name, any x, any y)
  * @param name          Name to output in assertion result.
  * @param x             First value to compare.
  * @param y             Second value to compare.
- * @param tolerance     Maximum allowed difference between floats.
+ * @param threshold     Maximum allowed difference between floats.
  * @returns             True if the floats are equal within
  *                      the threshold, false otherwise.
  */
@@ -500,18 +513,15 @@ stock bool Test_AssertFloatsEqual(
     const char[] name,
     float x,
     float y,
-    float tolerance = 0.0005
+    float threshold = 0.0001
 )
 {
-    bool result;
-    if (y == 0.0) {
-        result = x == 0.0;
-    } else {
-        float difference = x / y;
-        result = difference > (1 - tolerance) && difference < (1 + tolerance);
-    }
-
-    if (! Test_OutputAssertResult(result, "%s == %f", name, y)) {
+    if (! Test_OutputAssertResult(
+        Test_FloatsEqual(x, y, threshold),
+        "%s == %f",
+        name,
+        y
+    )) {
         Test_Output("%s = %f", name, x);
 
         return false;
