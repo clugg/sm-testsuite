@@ -96,7 +96,13 @@ void it_should_pass_all()
 
 void it_should_fail_all()
 {
+    Test_AssertTrue("value", false);
+    Test_AssertFalse("value", true);
     Test_AssertEqual("matching int", 1, 2);
+    Test_AssertNotEqual("non-matching int", 1, 1);
+    Test_AssertFloatsEqual("float", 0.1, 0.2);
+    Test_AssertStringsEqual("string", "hello", "world");
+    Test_Output("here is some information: %d", 1);
 }
 
 void it_should_fail_some()
@@ -163,14 +169,25 @@ This plugin will produce the following output:
 |------------------------------|
 |                              |
 | it_should_fail_all           |
+|   [!] value == true          |
+|   [=] value = false          |
+|   [!] value == false         |
+|   [=] value = true           |
 |   [!] matching int == 2      |
 |   [=] matching int = 1       |
-| Assertions: 1 failed         |
+|   [!] non-matching int != 1  |
+|   [=] non-matching int = 1   |
+|   [!] float == 0.200000      |
+|   [=] float = 0.100000       |
+|   [!] string == "world"      |
+|   [=] string = "hello"       |
+|   [=] here is some information: 1 |
+| Assertions: 6 failed         |
 | FAIL!                        |
 |                              |
 |------------------------------|
 | Tests: 1 failed              |
-| Time:  0.001343s             |
+| Time:  0.002643s             |
 |------------------------------|
 
 |----------------------------------------|
@@ -191,9 +208,20 @@ This plugin will produce the following output:
 |----------------------------------------|
 |                                        |
 | it_should_fail_all                     |
+|   [!] value == true                    |
+|   [=] value = false                    |
+|   [!] value == false                   |
+|   [=] value = true                     |
 |   [!] matching int == 2                |
 |   [=] matching int = 1                 |
-| Assertions: 1 failed                   |
+|   [!] non-matching int != 1            |
+|   [=] non-matching int = 1             |
+|   [!] float == 0.200000                |
+|   [=] float = 0.100000                 |
+|   [!] string == "world"                |
+|   [=] string = "hello"                 |
+|   [=] here is some information: 1      |
+| Assertions: 6 failed                   |
 | FAIL!                                  |
 |                                        |
 |----------------------------------------|
@@ -207,7 +235,7 @@ This plugin will produce the following output:
 |                                        |
 |----------------------------------------|
 | Tests: 1 passed / 2 failed             |
-| Time:  0.002179s                       |
+| Time:  0.002664s                       |
 |----------------------------------------|
 
 |--------------------|

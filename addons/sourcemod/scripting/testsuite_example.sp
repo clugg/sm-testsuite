@@ -63,7 +63,13 @@ void it_should_pass_all()
 
 void it_should_fail_all()
 {
+    Test_AssertTrue("value", false);
+    Test_AssertFalse("value", true);
     Test_AssertEqual("matching int", 1, 2);
+    Test_AssertNotEqual("non-matching int", 1, 1);
+    Test_AssertFloatsEqual("float", 0.1, 0.2);
+    Test_AssertStringsEqual("string", "hello", "world");
+    Test_Output("here is some information: %d", 1);
 }
 
 void it_should_fail_some()
