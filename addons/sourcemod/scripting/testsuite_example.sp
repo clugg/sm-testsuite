@@ -68,8 +68,8 @@ void it_should_fail_all()
 
 void it_should_fail_some()
 {
-    Test_AssertEqual("matching int", 1, 2);
-    Test_AssertNotEqual("non-matching int", 1, 2);
+    Test_AssertTrue("value", true);
+    Test_AssertFalse("value", true);
 }
 
 public void OnPluginStart()

@@ -101,8 +101,8 @@ void it_should_fail_all()
 
 void it_should_fail_some()
 {
-    Test_AssertEqual("matching int", 1, 2);
-    Test_AssertNotEqual("non-matching int", 1, 2);
+    Test_AssertTrue("value", true);
+    Test_AssertFalse("value", true);
 }
 
 public void OnPluginStart()
@@ -199,9 +199,9 @@ This plugin will produce the following output:
 |----------------------------------------|
 |                                        |
 | it_should_fail_some                    |
-|   [!] matching int == 2                |
-|   [=] matching int = 1                 |
-|   [ ] non-matching int != 2            |
+|   [ ] value == true                    |
+|   [!] value == false                   |
+|   [=] value = true                     |
 | Assertions: 1 passed / 1 failed        |
 | FAIL!                                  |
 |                                        |
