@@ -47,6 +47,98 @@ static Profiler __test_profiler = null;
 #endif
 
 /**
+ * @section Output
+ */
+
+static int __test_boxWidth = 64;
+
+/**
+ * Sets the width of the box rendered for sections.
+ *
+ * @param width     Width of box.
+ */
+stock void Test_SetBoxWidth(int width)
+{
+    if (width <= 0) {
+        return;
+    }
+
+    __test_boxWidth = width;
+}
+
+/**
+ * Fits the message to a box and outputs to server.
+ *
+ * @param message   Message to output.
+ * @param ...       Further arguments to pass to message formatter.
+ */
+stock void Test_Print(const char[] message, any ...)
+{
+    char output[1024];
+    VFormat(output, sizeof(output), message, 2);
+
+    // fit output to a box
+    int len = strlen(output);
+    if (len < __test_boxWidth - 4) {
+        int i;
+        for (i = len; i < __test_boxWidth - 4; i += 1) {
+            output[i] = ' ';
+        }
+        output[i] = '\0';
+    }
+
+    PrintToServer("| %s |", output);
+}
+
+/**
+ * Aligns the message to the center of the box and outputs to server.
+ *
+ * @param message   Message to output.
+ * @param ...       Further arguments to pass to message formatter.
+ */
+stock void Test_PrintCentered(const char[] message, any...)
+{
+    char output[1024];
+    VFormat(output, sizeof(output), message, 2);
+
+    // left pad output
+    int len = strlen(output);
+    int spaceAmount = RoundToFloor(((__test_boxWidth - 4) / 2.0) - (len / 2.0));
+    if (spaceAmount > 0) {
+        char[] spaces = new char[spaceAmount + 1];
+        int i;
+        for (i = 0; i < spaceAmount; i += 1) {
+            spaces[i] = ' ';
+        }
+        spaces[i] = '\0';
+
+        Format(output, sizeof(output), "%s%s", spaces, output);
+    }
+
+    Test_Print("%s", output);
+}
+
+/**
+ * Prints a box-width separator.
+ *
+ * @param separator     Separator to use.
+ */
+stock void Test_PrintSeparator(int separator = '-')
+{
+    int max_size = __test_boxWidth + 1;
+    char[] output = new char[max_size];
+
+    int i;
+    for (i = 0; i < __test_boxWidth - 2; i += 1) {
+        output[i] = separator;
+    }
+    output[i] = '\0';
+
+    PrintToServer("|%s|", output);
+}
+
+
+/**
  * @section Sections
  */
 
@@ -64,7 +156,9 @@ stock void Test_StartSection(const char[] name)
     __test_testsTotal = 0;
     __test_testsPassed = 0;
 
-    PrintToServer("| %s", name);
+    Test_PrintSeparator();
+    Test_PrintCentered("%s", name);
+    Test_PrintSeparator();
 
     #if _TEST_PROFILER_ENABLED
     if (__test_profiler == null) {
@@ -120,11 +214,12 @@ stock void Test_EndSection()
         strcopy(output, sizeof(output), "No tests run!");
     }
 
-    PrintToServer("");
-    PrintToServer(output);
+    Test_Print("%s", output);
     #if _TEST_PROFILER_ENABLED
-    PrintToServer("Time:  %fs", __test_profiler.Time);
+    Test_Print("Time:  %fs", __test_profiler.Time);
     #endif
+    Test_PrintSeparator();
+    PrintToServer("");
 }
 
 /**
@@ -146,7 +241,8 @@ stock void Test_BeforeRun(const char[] name)
     __test_assertionsTotal = 0;
     __test_assertionsPassed = 0;
 
-    PrintToServer("\n%s", name);
+    Test_Print("");
+    Test_Print("%s", name);
 }
 
 /**
@@ -190,10 +286,12 @@ stock bool Test_AfterRun()
             );
         }
 
-        PrintToServer(output);
+        Test_Print("%s", output);
     }
 
-    PrintToServer("%s", passed ? "PASS" : "FAIL!");
+    Test_Print("%s", passed ? "PASS" : "FAIL!");
+    Test_Print("");
+    Test_PrintSeparator();
 
     return passed;
 }
@@ -251,7 +349,7 @@ stock void Test_Output(const char[] message, any ...)
 {
     char output[1024];
     VFormat(output, sizeof(output), message, 2);
-    PrintToServer("  [=] %s", output);
+    Test_Print("  [=] %s", output);
 }
 
 /**
@@ -271,7 +369,7 @@ stock bool Test_OutputAssertResult(bool result, const char[] message, any ...)
 
     char output[1024];
     VFormat(output, sizeof(output), message, 3);
-    PrintToServer("  [%s] %s", result ? " " : "!", output);
+    Test_Print("  [%s] %s", result ? " " : "!", output);
 
     return result;
 }

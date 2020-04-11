@@ -61,7 +61,13 @@ Test_AssertStringsEqual("string", "hello", "hello");
 
 `Test_AssertFloatsEqual` accepts an optional fourth parameter to set the threshold under which floats are considered equal. This is used to combat [floating point errors](https://en.wikipedia.org/wiki/Floating_point_error_mitigation) and has been set to a sensible default.
 
-### Custom Output
+### Customising Output
+Each section's tests and results are outputted within a box shape. The box has a default width of 64, but you can change it per-section if you'd like your the box to better fit your test output.
+
+```c
+Test_SetBoxWidth(32);
+```
+
 You might want to output some information not directly related to an assertion. However, if you simply use `PrintToServer`, the information will not align correctly with the rest of the test output. A special function is provided for this, which uses `VFormat` internally, meaning you can treat it in a similar way to `Format`.
 
 ```c
@@ -106,19 +112,19 @@ public void OnPluginStart()
     Test_Run("it_should_pass_all", it_should_pass_all);
     Test_EndSection();
 
-    PrintToServer("");
+    Test_SetBoxWidth(32);
     Test_StartSection("failing section");
     Test_Run("it_should_fail_all", it_should_fail_all);
     Test_EndSection();
 
-    PrintToServer("");
+    Test_SetBoxWidth(42);
     Test_StartSection("both section");
     Test_Run("it_should_pass_all", it_should_pass_all);
     Test_Run("it_should_fail_all", it_should_fail_all);
     Test_Run("it_should_fail_some", it_should_fail_some);
     Test_EndSection();
 
-    PrintToServer("");
+    Test_SetBoxWidth(22);
     Test_StartSection("empty section");
     Test_EndSection();
 }
@@ -126,70 +132,90 @@ public void OnPluginStart()
 
 This plugin will produce the following output:
 ```
-| passing section
+|--------------------------------------------------------------|
+|                       passing section                        |
+|--------------------------------------------------------------|
+|                                                              |
+| it_has_no_asserts                                            |
+|   [=] I have no strong feelings one way or the other.        |
+| PASS                                                         |
+|                                                              |
+|--------------------------------------------------------------|
+|                                                              |
+| it_should_pass_all                                           |
+|   [ ] value == true                                          |
+|   [ ] value == false                                         |
+|   [ ] matching int == 1                                      |
+|   [ ] non-matching int != 2                                  |
+|   [ ] float == 0.100000                                      |
+|   [ ] string == "hello"                                      |
+|   [=] here is some information: 1                            |
+| Assertions: 6 passed                                         |
+| PASS                                                         |
+|                                                              |
+|--------------------------------------------------------------|
+| Tests: 2 passed                                              |
+| Time:  0.003803s                                             |
+|--------------------------------------------------------------|
 
-it_has_no_asserts
-  [=] I have no strong feelings one way or the other.
-PASS
+|------------------------------|
+|       failing section        |
+|------------------------------|
+|                              |
+| it_should_fail_all           |
+|   [!] matching int == 2      |
+|   [=] matching int = 1       |
+| Assertions: 1 failed         |
+| FAIL!                        |
+|                              |
+|------------------------------|
+| Tests: 1 failed              |
+| Time:  0.001343s             |
+|------------------------------|
 
-it_should_pass_all
-  [ ] value == true
-  [ ] value == false
-  [ ] matching int == 1
-  [ ] non-matching int != 2
-  [ ] float == 0.100000
-  [ ] string == "hello"
-  [=] here is some information: 1
-Assertions: 6 passed
-PASS
+|----------------------------------------|
+|              both section              |
+|----------------------------------------|
+|                                        |
+| it_should_pass_all                     |
+|   [ ] value == true                    |
+|   [ ] value == false                   |
+|   [ ] matching int == 1                |
+|   [ ] non-matching int != 2            |
+|   [ ] float == 0.100000                |
+|   [ ] string == "hello"                |
+|   [=] here is some information: 1      |
+| Assertions: 6 passed                   |
+| PASS                                   |
+|                                        |
+|----------------------------------------|
+|                                        |
+| it_should_fail_all                     |
+|   [!] matching int == 2                |
+|   [=] matching int = 1                 |
+| Assertions: 1 failed                   |
+| FAIL!                                  |
+|                                        |
+|----------------------------------------|
+|                                        |
+| it_should_fail_some                    |
+|   [!] matching int == 2                |
+|   [=] matching int = 1                 |
+|   [ ] non-matching int != 2            |
+| Assertions: 1 passed / 1 failed        |
+| FAIL!                                  |
+|                                        |
+|----------------------------------------|
+| Tests: 1 passed / 2 failed             |
+| Time:  0.002179s                       |
+|----------------------------------------|
 
-Tests: 2 passed
-Time:  0.002246s
-
-| failing section
-
-it_should_fail_all
-  [!] matching int == 2
-  [=] matching int = 1
-Assertions: 1 failed
-FAIL!
-
-Tests: 1 failed
-Time:  0.000723s
-
-| both section
-
-it_should_pass_all
-  [ ] value == true
-  [ ] value == false
-  [ ] matching int == 1
-  [ ] non-matching int != 2
-  [ ] float == 0.100000
-  [ ] string == "hello"
-  [=] here is some information: 1
-Assertions: 6 passed
-PASS
-
-it_should_fail_all
-  [!] matching int == 2
-  [=] matching int = 1
-Assertions: 1 failed
-FAIL!
-
-it_should_fail_some
-  [!] matching int == 2
-  [=] matching int = 1
-  [ ] non-matching int != 2
-Assertions: 1 passed / 1 failed
-FAIL!
-
-Tests: 1 passed / 2 failed
-Time:  0.003108s
-
-| empty section
-
-No tests run!
-Time:  0.000000s
+|--------------------|
+|   empty section    |
+|--------------------|
+| No tests run!      |
+| Time:  0.000000s   |
+|--------------------|
 ```
 
 The output is designed to be fairly simple and eye-catching for when assertions do fail.
