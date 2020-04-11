@@ -117,6 +117,8 @@ stock void Test_EndSection()
                 __test_testsTotal - __test_testsPassed
             );
         }
+    } else {
+        strcopy(output, sizeof(output), "\nNo tests run!");
     }
 
     PrintToServer(output);
