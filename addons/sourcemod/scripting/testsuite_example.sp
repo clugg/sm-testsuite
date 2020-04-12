@@ -88,24 +88,24 @@ void it_should_fail_some()
 
 public void OnPluginStart()
 {
+    Test_SetBoxWidth(56);
     Test_StartSection("passing section");
     Test_Run("it_has_no_asserts", it_has_no_asserts);
     Test_Run("it_should_pass_all", it_should_pass_all);
     Test_EndSection();
 
-    Test_SetBoxWidth(42);
+    Test_SetBoxWidth(36);
     Test_StartSection("failing section");
     Test_Run("it_should_fail_all", it_should_fail_all);
     Test_EndSection();
 
-    Test_SetBoxWidth(42);
     Test_StartSection("both section");
     Test_Run("it_should_pass_all", it_should_pass_all);
     Test_Run("it_should_fail_all", it_should_fail_all);
     Test_Run("it_should_fail_some", it_should_fail_some);
     Test_EndSection();
 
-    Test_SetBoxWidth(22);
+    Test_SetBoxWidth(20);
     Test_StartSection("empty section");
     Test_EndSection();
 }

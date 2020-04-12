@@ -125,24 +125,24 @@ void it_should_fail_some()
 
 public void OnPluginStart()
 {
+    Test_SetBoxWidth(56);
     Test_StartSection("passing section");
     Test_Run("it_has_no_asserts", it_has_no_asserts);
     Test_Run("it_should_pass_all", it_should_pass_all);
     Test_EndSection();
 
-    Test_SetBoxWidth(42);
+    Test_SetBoxWidth(36);
     Test_StartSection("failing section");
     Test_Run("it_should_fail_all", it_should_fail_all);
     Test_EndSection();
 
-    Test_SetBoxWidth(42);
     Test_StartSection("both section");
     Test_Run("it_should_pass_all", it_should_pass_all);
     Test_Run("it_should_fail_all", it_should_fail_all);
     Test_Run("it_should_fail_some", it_should_fail_some);
     Test_EndSection();
 
-    Test_SetBoxWidth(22);
+    Test_SetBoxWidth(20);
     Test_StartSection("empty section");
     Test_EndSection();
 }
@@ -150,142 +150,142 @@ public void OnPluginStart()
 
 This plugin will produce the following output:
 ```
-|--------------------------------------------------------------|
-|                       passing section                        |
-|--------------------------------------------------------------|
-|                                                              |
-| it_has_no_asserts                                            |
-|   [=] I have no strong feelings one way or the other.        |
-| PASS                                                         |
-|                                                              |
-|--------------------------------------------------------------|
-|                                                              |
-| it_should_pass_all                                           |
-|   [ ] value == true                                          |
-|   [ ] value == false                                         |
-|   [ ] value == null                                          |
-|   [ ] value != null                                          |
-|   [ ] value == 1                                             |
-|   [ ] value != 2                                             |
-|   [ ] value == 0.100000                                      |
-|   [ ] value != 0.200000                                      |
-|   [ ] value == "hello"                                       |
-|   [ ] value != "world"                                       |
-|   [=] here is some information: 1                            |
-| Assertions: 10 passed                                        |
-| PASS                                                         |
-|                                                              |
-|--------------------------------------------------------------|
-| Tests: 2 passed                                              |
-| Time:  0.003881s                                             |
-|--------------------------------------------------------------|
+|------------------------------------------------------|
+|                   passing section                    |
+|------------------------------------------------------|
+|                                                      |
+| it_has_no_asserts                                    |
+|   i I have no strong feelings one way or the other.  |
+| ✓ PASS                                               |
+|                                                      |
+|------------------------------------------------------|
+|                                                      |
+| it_should_pass_all                                   |
+|   ✓ value == true                                    |
+|   ✓ value == false                                   |
+|   ✓ value == null                                    |
+|   ✓ value != null                                    |
+|   ✓ value == 1                                       |
+|   ✓ value != 2                                       |
+|   ✓ value == 0.100000                                |
+|   ✓ value != 0.200000                                |
+|   ✓ value == "hello"                                 |
+|   ✓ value != "world"                                 |
+|   i here is some information: 1                      |
+| Assertions: 10 passed                                |
+| ✓ PASS                                               |
+|                                                      |
+|------------------------------------------------------|
+| Tests: 2 passed                                      |
+| Time:  0.004358s                                     |
+|------------------------------------------------------|
 
-|----------------------------------------|
-|            failing section             |
-|----------------------------------------|
-|                                        |
-| it_should_fail_all                     |
-|   [!] value == true                    |
-|   [=] value = false                    |
-|   [!] value == false                   |
-|   [=] value = true                     |
-|   [!] value == null                    |
-|   [=] value = 1                        |
-|   [!] value != null                    |
-|   [=] value = 0                        |
-|   [!] value == 2                       |
-|   [=] value = 1                        |
-|   [!] value != 1                       |
-|   [=] value = 1                        |
-|   [!] value == 0.200000                |
-|   [=] value = 0.100000                 |
-|   [!] value != 0.100000                |
-|   [=] value = 0.100000                 |
-|   [!] value == "world"                 |
-|   [=] value = "hello"                  |
-|   [!] value != "hello"                 |
-|   [=] value = "hello"                  |
-|   [=] here is some information: 1      |
-| Assertions: 10 failed                  |
-| FAIL!                                  |
-|                                        |
-|----------------------------------------|
-| Tests: 1 failed                        |
-| Time:  0.004211s                       |
-|----------------------------------------|
+|----------------------------------|
+|         failing section          |
+|----------------------------------|
+|                                  |
+| it_should_fail_all               |
+|   ✗ value == true                |
+|   i value = false                |
+|   ✗ value == false               |
+|   i value = true                 |
+|   ✗ value == null                |
+|   i value = 1                    |
+|   ✗ value != null                |
+|   i value = 0                    |
+|   ✗ value == 2                   |
+|   i value = 1                    |
+|   ✗ value != 1                   |
+|   i value = 1                    |
+|   ✗ value == 0.200000            |
+|   i value = 0.100000             |
+|   ✗ value != 0.100000            |
+|   i value = 0.100000             |
+|   ✗ value == "world"             |
+|   i value = "hello"              |
+|   ✗ value != "hello"             |
+|   i value = "hello"              |
+|   i here is some information: 1  |
+| Assertions: 10 failed            |
+| ✗ FAIL                           |
+|                                  |
+|----------------------------------|
+| Tests: 1 failed                  |
+| Time:  0.002570s                 |
+|----------------------------------|
 
-|----------------------------------------|
-|              both section              |
-|----------------------------------------|
-|                                        |
-| it_should_pass_all                     |
-|   [ ] value == true                    |
-|   [ ] value == false                   |
-|   [ ] value == null                    |
-|   [ ] value != null                    |
-|   [ ] value == 1                       |
-|   [ ] value != 2                       |
-|   [ ] value == 0.100000                |
-|   [ ] value != 0.200000                |
-|   [ ] value == "hello"                 |
-|   [ ] value != "world"                 |
-|   [=] here is some information: 1      |
-| Assertions: 10 passed                  |
-| PASS                                   |
-|                                        |
-|----------------------------------------|
-|                                        |
-| it_should_fail_all                     |
-|   [!] value == true                    |
-|   [=] value = false                    |
-|   [!] value == false                   |
-|   [=] value = true                     |
-|   [!] value == null                    |
-|   [=] value = 1                        |
-|   [!] value != null                    |
-|   [=] value = 0                        |
-|   [!] value == 2                       |
-|   [=] value = 1                        |
-|   [!] value != 1                       |
-|   [=] value = 1                        |
-|   [!] value == 0.200000                |
-|   [=] value = 0.100000                 |
-|   [!] value != 0.100000                |
-|   [=] value = 0.100000                 |
-|   [!] value == "world"                 |
-|   [=] value = "hello"                  |
-|   [!] value != "hello"                 |
-|   [=] value = "hello"                  |
-|   [=] here is some information: 1      |
-| Assertions: 10 failed                  |
-| FAIL!                                  |
-|                                        |
-|----------------------------------------|
-|                                        |
-| it_should_fail_some                    |
-|   [ ] value == true                    |
-|   [!] value == false                   |
-|   [=] value = true                     |
-| Assertions: 1 passed / 1 failed        |
-| FAIL!                                  |
-|                                        |
-|----------------------------------------|
-| Tests: 1 passed / 2 failed             |
-| Time:  0.003348s                       |
-|----------------------------------------|
+|----------------------------------|
+|           both section           |
+|----------------------------------|
+|                                  |
+| it_should_pass_all               |
+|   ✓ value == true                |
+|   ✓ value == false               |
+|   ✓ value == null                |
+|   ✓ value != null                |
+|   ✓ value == 1                   |
+|   ✓ value != 2                   |
+|   ✓ value == 0.100000            |
+|   ✓ value != 0.200000            |
+|   ✓ value == "hello"             |
+|   ✓ value != "world"             |
+|   i here is some information: 1  |
+| Assertions: 10 passed            |
+| ✓ PASS                           |
+|                                  |
+|----------------------------------|
+|                                  |
+| it_should_fail_all               |
+|   ✗ value == true                |
+|   i value = false                |
+|   ✗ value == false               |
+|   i value = true                 |
+|   ✗ value == null                |
+|   i value = 1                    |
+|   ✗ value != null                |
+|   i value = 0                    |
+|   ✗ value == 2                   |
+|   i value = 1                    |
+|   ✗ value != 1                   |
+|   i value = 1                    |
+|   ✗ value == 0.200000            |
+|   i value = 0.100000             |
+|   ✗ value != 0.100000            |
+|   i value = 0.100000             |
+|   ✗ value == "world"             |
+|   i value = "hello"              |
+|   ✗ value != "hello"             |
+|   i value = "hello"              |
+|   i here is some information: 1  |
+| Assertions: 10 failed            |
+| ✗ FAIL                           |
+|                                  |
+|----------------------------------|
+|                                  |
+| it_should_fail_some              |
+|   ✓ value == true                |
+|   ✗ value == false               |
+|   i value = true                 |
+| Assertions: 1 passed / 1 failed  |
+| ✗ FAIL                           |
+|                                  |
+|----------------------------------|
+| Tests: 1 passed / 2 failed       |
+| Time:  0.003146s                 |
+|----------------------------------|
 
-|--------------------|
-|   empty section    |
-|--------------------|
-| No tests run!      |
-| Time:  0.000000s   |
-|--------------------|
+|------------------|
+|  empty section   |
+|------------------|
+| No tests run!    |
+| Time:  0.000000s |
+|------------------|
 ```
 
 The output is designed to be fairly simple and eye-catching for when assertions do fail.
-* `[ ]` denotes that the assertion has passed
-* `[!]` denotes that the assertion has failed
-* `[=]` denotes information - provided either by `Test_Output` or automatically when an assertion fails
+* `✓` denotes that the assertion has passed
+* `✗` denotes that the assertion has failed
+* `i` denotes information - provided either by `Test_Output` or automatically when an assertion fails
 
 Note that if you are using a SourceMod version lower than 1.10, you will not see the time output.
 

@@ -50,6 +50,9 @@ static Profiler __test_profiler = null;
  * @section Output
  */
 
+#define TEST_PASS_SYMBOL "✓"
+#define TEST_FAIL_SYMBOL "✗"
+
 static int __test_boxWidth = 64;
 
 /**
@@ -81,7 +84,17 @@ stock void Test_Print(const char[] message, any ...)
     int len = strlen(output);
     if (len < __test_boxWidth - 4) {
         int i;
-        for (i = len; i < __test_boxWidth - 4; i += 1) {
+        int end = __test_boxWidth - 4;
+        if (
+            StrContains(output, TEST_PASS_SYMBOL) != -1
+            || StrContains(output, TEST_FAIL_SYMBOL) != -1
+        ) {
+            // our symbols for test pass/fail are actually 3 bytes long,
+            // so we need to trick the space padding to add more spaces
+            end += 2;
+        }
+
+        for (i = len; i < end; i += 1) {
             output[i] = ' ';
         }
         output[i] = '\0';
@@ -289,7 +302,11 @@ stock bool Test_AfterRun()
         Test_Print("%s", output);
     }
 
-    Test_Print("%s", passed ? "PASS" : "FAIL!");
+    Test_Print(
+        "%s %s",
+        passed ? TEST_PASS_SYMBOL : TEST_FAIL_SYMBOL,
+        passed ? "PASS" : "FAIL"
+    );
     Test_Print("");
     Test_PrintSeparator();
 
@@ -349,7 +366,7 @@ stock void Test_Output(const char[] message, any ...)
 {
     char output[1024];
     VFormat(output, sizeof(output), message, 2);
-    Test_Print("  [=] %s", output);
+    Test_Print("  i %s", output);
 }
 
 /**
@@ -369,7 +386,11 @@ stock bool Test_OutputAssertResult(bool result, const char[] message, any ...)
 
     char output[1024];
     VFormat(output, sizeof(output), message, 3);
-    Test_Print("  [%s] %s", result ? " " : "!", output);
+    Test_Print(
+        "  %s %s",
+        result ? TEST_PASS_SYMBOL : TEST_FAIL_SYMBOL,
+        output
+    );
 
     return result;
 }
