@@ -68,6 +68,67 @@ stock void Test_SetBoxWidth(int width)
 }
 
 /**
+ * Calculates the visible length of a string, taking into account
+ * multibyte Unicode symbols.
+ *
+ * @param str       String to check.
+ * @returns     The number of visible characters in the string.
+ */
+stock int Test_MBStrlen(const char[] str)
+{
+    int length = strlen(str);
+    int visible_length = length;
+    int size;
+    for (int i = 0; i < length; i += 1) {
+        if ((str[i] & 0x80) != 0) {
+            if (length - i < 2) {
+                continue;
+            }
+
+            if ((str[i + 1] & 0xC0) != 0x80) {
+                continue;
+            }
+
+            if ((str[i] & 0xE0) == 0xE0) {
+                if (length - i < 3) {
+                    continue;
+                }
+
+                if ((str[i + 2] & 0xC0) != 0x80) {
+                    continue;
+                }
+
+                if ((str[i] & 0xF0) == 0xF0) {
+                    if (length - i < 4) {
+                        continue;
+                    }
+
+                    if (
+                        (str[i] & 0xF8) != 0xF0
+                        || (str[i + 3] & 0xC0) != 0x80
+                    ) {
+                        continue;
+                    }
+
+                    size = 4;
+                } else {
+                    size = 3;
+                }
+            } else {
+                size = 2;
+            }
+        } else {
+            size = 1;
+        }
+
+        i += size - 1;
+        visible_length -= size - 1;
+    }
+
+    return visible_length;
+}
+
+/**
  * Fits the message to a box and outputs to server.
  *
  * @param message   Message to output.
@@ -79,20 +140,12 @@ stock void Test_Print(const char[] message, any ...)
     VFormat(output, sizeof(output), message, 2);
 
     // fit output to a box
-    int len = strlen(output);
-    if (len < __test_boxWidth - 4) {
+    int length = strlen(output);
+    int extra = length - Test_MBStrlen(output);
+    int end = __test_boxWidth - 4 + extra;
+    if (length < end) {
         int i;
-        int end = __test_boxWidth - 4;
-        if (
-            StrContains(output, TEST_PASS_SYMBOL) != -1
-            || StrContains(output, TEST_FAIL_SYMBOL) != -1
-        ) {
-            // our symbols for test pass/fail are actually 3 bytes long,
-            // so we need to trick the space padding to add more spaces
-            end += 2;
-        }
-
-        for (i = len; i < end; i += 1) {
+        for (i = length; i < end; i += 1) {
             output[i] = ' ';
         }
         output[i] = '\0';
@@ -113,7 +166,7 @@ stock void Test_PrintCentered(const char[] message, any...)
     VFormat(output, sizeof(output), message, 2);
 
     // left pad output
-    int len = strlen(output);
+    int len = Test_MBStrlen(output);
     int spaceAmount = RoundToFloor(((__test_boxWidth - 4) / 2.0) - (len / 2.0));
     if (spaceAmount > 0) {
         char[] spaces = new char[spaceAmount + 1];
