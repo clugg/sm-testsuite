@@ -51,6 +51,7 @@ Test_RunFromString("it_should_do_something");
 ### Assertions
 An assertion is a statement that something should be a certain way. There are multiple types of assertions. Every assertion method accepts a name as the first parameter to make your test output more human readable. Every assertion you make will count towards the total assertions made in an individual test, and a single failed assertion means the entire test is considered failed. When an assertion fails, the value of the variable being asserted against will be outputted as information. *Note: when an assertion fails, the function will continue executing unless you explicitly stop it.*
 ```c
+Test_Assert("statement", true);
 Test_AssertTrue("value", true);
 Test_AssertFalse("value", false);
 Test_AssertNull("value", null);
@@ -89,6 +90,7 @@ void it_has_no_asserts()
 
 void it_should_pass_all()
 {
+    Test_Assert("statement", true);
     Test_AssertTrue("value", true);
     Test_AssertFalse("value", false);
     Test_AssertNull("value", null);
@@ -104,6 +106,7 @@ void it_should_pass_all()
 
 void it_should_fail_all()
 {
+    Test_Assert("statement", false);
     Test_AssertTrue("value", false);
     Test_AssertFalse("value", true);
     Test_AssertNull("value", view_as<Handle>(1));
@@ -161,6 +164,7 @@ This plugin will produce the following output:
 |------------------------------------------------------|
 |                                                      |
 | it_should_pass_all                                   |
+|   ✓ statement                                        |
 |   ✓ value == true                                    |
 |   ✓ value == false                                   |
 |   ✓ value == null                                    |
@@ -185,6 +189,7 @@ This plugin will produce the following output:
 |----------------------------------|
 |                                  |
 | it_should_fail_all               |
+|   ✗ statement                    |
 |   ✗ value == true                |
 |   i value = false                |
 |   ✗ value == false               |
@@ -219,6 +224,7 @@ This plugin will produce the following output:
 |----------------------------------|
 |                                  |
 | it_should_pass_all               |
+|   ✓ statement                    |
 |   ✓ value == true                |
 |   ✓ value == false               |
 |   ✓ value == null                |
@@ -236,6 +242,7 @@ This plugin will produce the following output:
 |----------------------------------|
 |                                  |
 | it_should_fail_all               |
+|   ✗ statement                    |
 |   ✗ value == true                |
 |   i value = false                |
 |   ✗ value == false               |

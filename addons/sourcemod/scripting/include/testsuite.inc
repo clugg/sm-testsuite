@@ -396,6 +396,18 @@ stock bool Test_OutputAssertResult(bool result, const char[] message, any ...)
 }
 
 /**
+ * Asserts that the value is truthy.
+ *
+ * @param name  Name to output in assertion result.
+ * @param x     Value to compare.
+ * @returns     True if the value is truthy, false otherwise.
+ */
+stock bool Test_Assert(const char[] name, any x)
+{
+    return Test_OutputAssertResult(!!x, "%s", name);
+}
+
+/**
  * Asserts that the value is true.
  *
  * @param name  Name to output in assertion result.
