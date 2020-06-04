@@ -40,9 +40,7 @@
 
 #if _TEST_PROFILER_ENABLED
 #include <profiler>
-#endif
 
-#if _TEST_PROFILER_ENABLED
 static Profiler __test_profiler = null;
 #endif
 
