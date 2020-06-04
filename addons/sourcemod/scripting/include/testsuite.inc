@@ -258,6 +258,8 @@ stock void Test_BeforeRun(const char[] name)
 
 /**
  * Calculates and outputs the test result to server.
+ *
+ * @returns     True if the test passed, false otherwise.
  */
 stock bool Test_AfterRun()
 {
@@ -503,6 +505,16 @@ stock bool Test_AssertNotEqual(const char[] name, any x, any y)
     return true;
 }
 
+/**
+ * Helper function to check whether two floats are "equal" within a
+ * threshold (to account for floating point errors).
+ * @see https://en.wikipedia.org/wiki/Floating_point_error_mitigation
+ * @param x             First value to compare.
+ * @param y             Second value to compare.
+ * @param threshold     Maximum allowed difference between floats.
+ * @returns             True if the floats are equal within
+ *                      the threshold, false otherwise.
+ */
 stock bool Test_FloatsEqual(float x, float y, float threshold = 0.0001)
 {
     if (x == y) {
@@ -517,9 +529,7 @@ stock bool Test_FloatsEqual(float x, float y, float threshold = 0.0001)
 }
 
 /**
- * Asserts that two floats are "equal" within a
- * threshold to account for floating point errors.
- * @see https://en.wikipedia.org/wiki/Floating_point_error_mitigation
+ * Asserts that two floats are equal (@see Test_FloatsEqual).
  *
  * @param name          Name to output in assertion result.
  * @param x             First value to compare.
@@ -550,9 +560,7 @@ stock bool Test_AssertFloatsEqual(
 }
 
 /**
- * Asserts that two floats are not "equal" within a
- * threshold to account for floating point errors.
- * @see https://en.wikipedia.org/wiki/Floating_point_error_mitigation
+ * Asserts that two floats are not equal (@see Test_FloatsEqual).
  *
  * @param name          Name to output in assertion result.
  * @param x             First value to compare.
