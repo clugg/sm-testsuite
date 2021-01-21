@@ -586,11 +586,7 @@ stock bool Test_FloatsEqual(float x, float y, float threshold = 0.0001)
         return true;
     }
 
-    if (y > (x - threshold) && y < (x + threshold)) {
-        return true;
-    }
-
-    return false;
+    return y > (x - threshold) && y < (x + threshold);
 }
 
 /**
