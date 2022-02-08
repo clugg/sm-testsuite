@@ -37,6 +37,7 @@
 #define _testsuite_included
 
 #define _TEST_PROFILER_ENABLED SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 10
+#define _TEST_FUNCTION_WORKAROUND SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 11
 
 #if _TEST_PROFILER_ENABLED
 #include <profiler>
@@ -367,7 +368,7 @@ stock bool Test_AfterRun()
 }
 
 /**
- * Performs pre-test oprations, executes the test then
+ * Performs pre-test operations, executes the test then
  * performs post-test operations.
  *
  * @param name      Name of test.
@@ -385,6 +386,24 @@ stock bool Test_Run(const char[] name, Test_Method method)
 }
 
 /**
+ * Works the same as Test_Run but accepts a less strictly typed method,
+ * which SM1.11 seems to require when using GetFunctionByName.
+ *
+ * @param name      Name of test.
+ * @param method    Method to execute.
+ * @returns         True if all test assertions passed, false otherwise.
+ */
+stock bool Test_RunUnsafe(const char[] name, Function method)
+{
+    Test_BeforeRun(name);
+
+    Call_StartFunction(null, method);
+    Call_Finish();
+
+    return Test_AfterRun();
+}
+
+/**
  * Resolves the function based on the provided name and executes Test_Run.
  *
  * @param name  Name of test to run.
@@ -392,7 +411,13 @@ stock bool Test_Run(const char[] name, Test_Method method)
  */
 stock bool Test_RunFromString(const char[] name)
 {
-    return Test_Run(name, view_as<Test_Method>(GetFunctionByName(null, name)));
+    Function method = GetFunctionByName(null, name);
+
+    #if _TEST_FUNCTION_WORKAROUND
+    return Test_RunUnsafe(name, method);
+    #else
+    return Test_Run(name, view_as<Test_Method>(method));
+    #endif
 }
 
 /**
