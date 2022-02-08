@@ -41,7 +41,7 @@ public Plugin myinfo = {
     name = "Test Suite Example",
     author = "clug",
     description = "Demonstrates basic usage of sm-testsuite.",
-    version = "1.0.0",
+    version = "1.2.2",
     url = "https://github.com/clugg/sm-testsuite"
 };
 
