@@ -24,4 +24,4 @@ jobs:
           version: ${{ matrix.sm_version }}
 
       - name: Compile Plugin
-        run: spcomp $SCRIPTS_PATH/testsuite_example.sp -i$SCRIPTS_PATH/include -O2 -t4 -v2
+        run: spcomp $SCRIPTS_PATH/testsuite_example.sp -i$includePath -i$SCRIPTS_PATH/include -O2 -t4 -v2
