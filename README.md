@@ -13,7 +13,7 @@ Table of Contents
 * [License](#license)
 
 ## Requirements
-* SourceMod 1.8 or later
+* SourceMod 1.10 or later (may still work for 1.8-1.9 but compatibility is no longer guaranteed as of v2.0.0)
 
 ## Installation
 Download the source code for the [latest release](https://github.com/clugg/sm-testsuite/releases/latest) and move all files and directories from the [`addons/sourcemod/scripting/include`](addons/sourcemod/scripting/include) directory to your existing `addons/sourcemod/scripting/include` directory.
