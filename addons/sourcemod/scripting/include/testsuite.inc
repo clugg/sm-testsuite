@@ -202,7 +202,6 @@ stock void Test_PrintSeparator(int separator = '-')
     PrintToServer("|%s|", output);
 }
 
-
 /**
  * @section Sections
  */
@@ -482,7 +481,11 @@ stock bool Test_OutputAssertResult(bool result, const char[] message, any ...)
  */
 stock bool Test_Assert(const char[] name, any value)
 {
-    return Test_OutputAssertResult(!!value, "%s", name);
+    bool result = !!value;
+
+    Test_OutputAssertResult(result, "%s", name);
+
+    return result;
 }
 
 /**
@@ -494,13 +497,14 @@ stock bool Test_Assert(const char[] name, any value)
  */
 stock bool Test_AssertTrue(const char[] name, any value)
 {
-    if (! Test_OutputAssertResult(value == true, "%s == true", name)) {
-        Test_Output("%s = %s", name, value ? "true" : "false");
+    bool result = value == true;
 
-        return false;
+    Test_OutputAssertResult(result, "%s == true", name);
+    if (! result) {
+        Test_Output("%s = %s", name, value ? "true" : "false");
     }
 
-    return true;
+    return result;
 }
 
 /**
@@ -512,13 +516,14 @@ stock bool Test_AssertTrue(const char[] name, any value)
  */
 stock bool Test_AssertFalse(const char[] name, any value)
 {
-    if (! Test_OutputAssertResult(value == false, "%s == false", name)) {
-        Test_Output("%s = %s", name, value ? "true" : "false");
+    bool result = value == false;
 
-        return false;
+    Test_OutputAssertResult(result, "%s == false", name);
+    if (! result) {
+        Test_Output("%s = %s", name, value ? "true" : "false");
     }
 
-    return true;
+    return result;
 }
 
 /**
@@ -530,13 +535,14 @@ stock bool Test_AssertFalse(const char[] name, any value)
  */
 stock bool Test_AssertNull(const char[] name, Handle value)
 {
-    if (! Test_OutputAssertResult(value == null, "%s == null", name)) {
-        Test_Output("%s = %d", name, value);
+    bool result = value == null;
 
-        return false;
+    Test_OutputAssertResult(result, "%s == null", name);
+    if (! result) {
+        Test_Output("%s = %d", name, value);
     }
 
-    return true;
+    return result;
 }
 
 /**
@@ -548,13 +554,14 @@ stock bool Test_AssertNull(const char[] name, Handle value)
  */
 stock bool Test_AssertNotNull(const char[] name, Handle value)
 {
-    if (! Test_OutputAssertResult(value != null, "%s != null", name)) {
-        Test_Output("%s = %d", name, value);
+    bool result = value != null;
 
-        return false;
+    Test_OutputAssertResult(result, "%s != null", name);
+    if (! result) {
+        Test_Output("%s = %d", name, value);
     }
 
-    return true;
+    return result;
 }
 
 /**
@@ -567,13 +574,14 @@ stock bool Test_AssertNotNull(const char[] name, Handle value)
  */
 stock bool Test_AssertEqual(const char[] name, any expected, any actual)
 {
-    if (! Test_OutputAssertResult(expected == actual, "%s == %d", name, actual)) {
-        Test_Output("%s = %d", name, expected);
+    bool result = expected == actual;
 
-        return false;
+    Test_OutputAssertResult(result, "%s == %d", name, actual);
+    if (! result) {
+        Test_Output("%s = %d", name, expected);
     }
 
-    return true;
+    return result;
 }
 
 /**
@@ -586,13 +594,14 @@ stock bool Test_AssertEqual(const char[] name, any expected, any actual)
  */
 stock bool Test_AssertNotEqual(const char[] name, any expected, any actual)
 {
-    if (! Test_OutputAssertResult(expected != actual, "%s != %d", name, actual)) {
-        Test_Output("%s = %d", name, expected);
+    bool result = expected != actual;
 
-        return false;
+    Test_OutputAssertResult(result, "%s != %d", name, actual);
+    if (! result) {
+        Test_Output("%s = %d", name, expected);
     }
 
-    return true;
+    return result;
 }
 
 /**
@@ -605,7 +614,11 @@ stock bool Test_AssertNotEqual(const char[] name, any expected, any actual)
  * @returns             True if the floats are equal within
  *                      the threshold, false otherwise.
  */
-stock bool Test_FloatsEqual(float expected, float actual, float threshold = 0.0001)
+stock bool Test_FloatsEqual(
+    float expected,
+    float actual,
+    float threshold = 0.0001
+)
 {
     if (expected == actual) {
         return true;
@@ -615,7 +628,7 @@ stock bool Test_FloatsEqual(float expected, float actual, float threshold = 0.00
 }
 
 /**
- * Asserts that two floats are equal (@see Test_FloatsEqual).
+ * Asserts that two floats are equal.
  *
  * @param name          Name to output in assertion result.
  * @param expected      First value to compare.
@@ -623,6 +636,7 @@ stock bool Test_FloatsEqual(float expected, float actual, float threshold = 0.00
  * @param threshold     Maximum allowed difference between floats.
  * @returns             True if the floats are equal within
  *                      the threshold, false otherwise.
+ * @see Test_FloatsEqual
  */
 stock bool Test_AssertFloatsEqual(
     const char[] name,
@@ -631,22 +645,18 @@ stock bool Test_AssertFloatsEqual(
     float threshold = 0.0001
 )
 {
-    if (! Test_OutputAssertResult(
-        Test_FloatsEqual(expected, actual, threshold),
-        "%s == %f",
-        name,
-        actual
-    )) {
-        Test_Output("%s = %f", name, expected);
+    bool result = Test_FloatsEqual(expected, actual, threshold);
 
-        return false;
+    Test_OutputAssertResult(result, "%s == %f", name, actual);
+    if (! result) {
+        Test_Output("%s = %f", name, expected);
     }
 
-    return true;
+    return result;
 }
 
 /**
- * Asserts that two floats are not equal (@see Test_FloatsEqual).
+ * Asserts that two floats are not equal.
  *
  * @param name          Name to output in assertion result.
  * @param expected      First value to compare.
@@ -654,6 +664,7 @@ stock bool Test_AssertFloatsEqual(
  * @param threshold     Maximum allowed difference between floats.
  * @returns             True if the floats are not equal within
  *                      the threshold, false otherwise.
+ * @see Test_FloatsEqual
  */
 stock bool Test_AssertFloatsNotEqual(
     const char[] name,
@@ -662,24 +673,20 @@ stock bool Test_AssertFloatsNotEqual(
     float threshold = 0.0001
 )
 {
-    if (! Test_OutputAssertResult(
-        ! Test_FloatsEqual(expected, actual, threshold),
-        "%s != %f",
-        name,
-        actual
-    )) {
-        Test_Output("%s = %f", name, expected);
+    bool result = ! Test_FloatsEqual(expected, actual, threshold);
 
-        return false;
+    Test_OutputAssertResult(result, "%s == %f", name, actual);
+    if (! result) {
+        Test_Output("%s = %f", name, expected);
     }
 
-    return true;
+    return result;
 }
 
 /**
  * Asserts that two strings are equal.
  *
- * @param name  Name to output in assertion result.
+ * @param name      Name to output in assertion result.
  * @param expected  First string to compare.
  * @param actual    Second string to compare.
  * @returns         True if the strings are equal, false otherwise.
@@ -690,19 +697,20 @@ stock bool Test_AssertStringsEqual(
     const char[] actual
 )
 {
-    if (! Test_OutputAssertResult(StrEqual(expected, actual), "%s == \"%s\"", name, actual)) {
-        Test_Output("%s = \"%s\"", name, expected);
+    bool result = StrEqual(expected, actual);
 
-        return false;
+    Test_OutputAssertResult(result, "%s == \"%s\"", name, actual);
+    if (! result) {
+        Test_Output("%s = \"%s\"", name, expected);
     }
 
-    return true;
+    return result;
 }
 
 /**
  * Asserts that two strings are not equal.
  *
- * @param name  Name to output in assertion result.
+ * @param name      Name to output in assertion result.
  * @param expected  First string to compare.
  * @param actual    Second string to compare.
  * @returns         True if the strings are not equal, false otherwise.
@@ -713,11 +721,12 @@ stock bool Test_AssertStringsNotEqual(
     const char[] actual
 )
 {
-    if (! Test_OutputAssertResult(! StrEqual(expected, actual), "%s != \"%s\"", name, actual)) {
-        Test_Output("%s = \"%s\"", name, expected);
+    bool result = ! StrEqual(expected, actual);
 
-        return false;
+    Test_OutputAssertResult(result, "%s == \"%s\"", name, actual);
+    if (! result) {
+        Test_Output("%s = \"%s\"", name, expected);
     }
 
-    return true;
+    return result;
 }
