@@ -16,6 +16,21 @@ Table of Contents
 * SourceMod 1.10 or later (may still work for 1.8-1.9 but compatibility is no longer guaranteed as of v2.0.0)
 
 ## Installation
+### Using as a Git Submodule
+
+If you use git while developing plugins, it is recommended to install this library as a [git submodule](https://git-scm.com/docs/git-submodule). This makes it easy to lock to a specific major version or update as desired.
+
+1. Run `git submodule add https://github.com/clugg/sm-testsuite dependencies/sm-testsuite` in your repository.
+
+2. To lock to a specific branch, run `git submodule set-branch -b YOUR_BRANCH dependencies/sm-testsuite` (e.g. `git submodule set-branch -b v1.x dependencies/sm-testsuite`). To undo this/reset to the default branch, run `git submodule set-branch -d dependencies/sm-testsuite`. In both cases an update needs to be run afterwards (see step 4).
+
+3. Whenever building plugins with `spcomp`, reference the library's include path using `-idependencies/sm-testsuite/addons/sourcemod/scripting` (this path may differ depending on which directory `spcomp` is run from).
+
+4. To pull the latest from your selected branch, run `git submodule update --remote dependencies/sm-testsuite`.
+
+To uninstall the library, run `git rm dependencies/sm-testsuite`.
+
+### Manually
 Download the source code for the [latest release](https://github.com/clugg/sm-testsuite/releases/latest) and move all files and directories from the [`addons/sourcemod/scripting/include`](addons/sourcemod/scripting/include) directory to your existing `addons/sourcemod/scripting/include` directory.
 
 ## Usage
