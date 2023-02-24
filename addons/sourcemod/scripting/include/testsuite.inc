@@ -72,7 +72,7 @@ stock void Test_SetBoxWidth(int width)
  * Calculates the visible length of a string, taking into account
  * multibyte Unicode symbols.
  *
- * @param str       String to check.
+ * @param str   String to check.
  * @returns     The number of visible characters in the string.
  */
 stock int Test_MBStrlen(const char[] str)
@@ -476,26 +476,26 @@ stock bool Test_OutputAssertResult(bool result, const char[] message, any ...)
 /**
  * Asserts that the value is truthy.
  *
- * @param name  Name to output in assertion result.
- * @param x     Value to compare.
- * @returns     True if the value is truthy, false otherwise.
+ * @param name      Name to output in assertion result.
+ * @param value     Value to compare.
+ * @returns         True if the value is truthy, false otherwise.
  */
-stock bool Test_Assert(const char[] name, any x)
+stock bool Test_Assert(const char[] name, any value)
 {
-    return Test_OutputAssertResult(!!x, "%s", name);
+    return Test_OutputAssertResult(!!value, "%s", name);
 }
 
 /**
  * Asserts that the value is true.
  *
- * @param name  Name to output in assertion result.
- * @param x     Value to compare.
- * @returns     True if the value is true, false otherwise.
+ * @param name      Name to output in assertion result.
+ * @param value     Value to compare.
+ * @returns         True if the value is true, false otherwise.
  */
-stock bool Test_AssertTrue(const char[] name, any x)
+stock bool Test_AssertTrue(const char[] name, any value)
 {
-    if (! Test_OutputAssertResult(x == true, "%s == true", name)) {
-        Test_Output("%s = %s", name, x ? "true" : "false");
+    if (! Test_OutputAssertResult(value == true, "%s == true", name)) {
+        Test_Output("%s = %s", name, value ? "true" : "false");
 
         return false;
     }
@@ -506,14 +506,14 @@ stock bool Test_AssertTrue(const char[] name, any x)
 /**
  * Asserts that the value is false.
  *
- * @param name  Name to output in assertion result.
- * @param x     Value to compare.
- * @returns     True if the value is false, false otherwise.
+ * @param name      Name to output in assertion result.
+ * @param value     Value to compare.
+ * @returns         True if the value is false, false otherwise.
  */
-stock bool Test_AssertFalse(const char[] name, any x)
+stock bool Test_AssertFalse(const char[] name, any value)
 {
-    if (! Test_OutputAssertResult(x == false, "%s == false", name)) {
-        Test_Output("%s = %s", name, x ? "true" : "false");
+    if (! Test_OutputAssertResult(value == false, "%s == false", name)) {
+        Test_Output("%s = %s", name, value ? "true" : "false");
 
         return false;
     }
@@ -524,14 +524,14 @@ stock bool Test_AssertFalse(const char[] name, any x)
 /**
  * Asserts that the value is null.
  *
- * @param name  Name to output in assertion result.
- * @param x     Value to compare.
- * @returns     True if the value is null, false otherwise.
+ * @param name      Name to output in assertion result.
+ * @param value     Value to compare.
+ * @returns         True if the value is null, false otherwise.
  */
-stock bool Test_AssertNull(const char[] name, Handle x)
+stock bool Test_AssertNull(const char[] name, Handle value)
 {
-    if (! Test_OutputAssertResult(x == null, "%s == null", name)) {
-        Test_Output("%s = %d", name, x);
+    if (! Test_OutputAssertResult(value == null, "%s == null", name)) {
+        Test_Output("%s = %d", name, value);
 
         return false;
     }
@@ -542,14 +542,14 @@ stock bool Test_AssertNull(const char[] name, Handle x)
 /**
  * Asserts that the value is not null.
  *
- * @param name  Name to output in assertion result.
- * @param x     Value to compare.
- * @returns     True if the value is not null, false otherwise.
+ * @param name      Name to output in assertion result.
+ * @param value     Value to compare.
+ * @returns         True if the value is not null, false otherwise.
  */
-stock bool Test_AssertNotNull(const char[] name, Handle x)
+stock bool Test_AssertNotNull(const char[] name, Handle value)
 {
-    if (! Test_OutputAssertResult(x != null, "%s != null", name)) {
-        Test_Output("%s = %d", name, x);
+    if (! Test_OutputAssertResult(value != null, "%s != null", name)) {
+        Test_Output("%s = %d", name, value);
 
         return false;
     }
@@ -560,15 +560,15 @@ stock bool Test_AssertNotNull(const char[] name, Handle x)
 /**
  * Asserts that two values are equal.
  *
- * @param name  Name to output in assertion result.
- * @param x     First value to compare.
- * @param y     Second value to compare.
- * @returns     True if the values are equal, false otherwise.
+ * @param name      Name to output in assertion result.
+ * @param expected  First value to compare.
+ * @param actual    Second value to compare.
+ * @returns         True if the values are equal, false otherwise.
  */
-stock bool Test_AssertEqual(const char[] name, any x, any y)
+stock bool Test_AssertEqual(const char[] name, any expected, any actual)
 {
-    if (! Test_OutputAssertResult(x == y, "%s == %d", name, y)) {
-        Test_Output("%s = %d", name, x);
+    if (! Test_OutputAssertResult(expected == actual, "%s == %d", name, actual)) {
+        Test_Output("%s = %d", name, expected);
 
         return false;
     }
@@ -580,14 +580,14 @@ stock bool Test_AssertEqual(const char[] name, any x, any y)
  * Asserts that two values are not equal.
  *
  * @param name  Name to output in assertion result.
- * @param x     First value to compare.
- * @param y     Second value to compare.
+ * @param expected     First value to compare.
+ * @param actual     Second value to compare.
  * @returns     True if the values are not equal, false otherwise.
  */
-stock bool Test_AssertNotEqual(const char[] name, any x, any y)
+stock bool Test_AssertNotEqual(const char[] name, any expected, any actual)
 {
-    if (! Test_OutputAssertResult(x != y, "%s != %d", name, y)) {
-        Test_Output("%s = %d", name, x);
+    if (! Test_OutputAssertResult(expected != actual, "%s != %d", name, actual)) {
+        Test_Output("%s = %d", name, expected);
 
         return false;
     }
@@ -599,45 +599,45 @@ stock bool Test_AssertNotEqual(const char[] name, any x, any y)
  * Helper function to check whether two floats are "equal" within a
  * threshold (to account for floating point errors).
  * @see https://en.wikipedia.org/wiki/Floating_point_error_mitigation
- * @param x             First value to compare.
- * @param y             Second value to compare.
+ * @param expected      First value to compare.
+ * @param actual        Second value to compare.
  * @param threshold     Maximum allowed difference between floats.
  * @returns             True if the floats are equal within
  *                      the threshold, false otherwise.
  */
-stock bool Test_FloatsEqual(float x, float y, float threshold = 0.0001)
+stock bool Test_FloatsEqual(float expected, float actual, float threshold = 0.0001)
 {
-    if (x == y) {
+    if (expected == actual) {
         return true;
     }
 
-    return y > (x - threshold) && y < (x + threshold);
+    return actual > (expected - threshold) && actual < (expected + threshold);
 }
 
 /**
  * Asserts that two floats are equal (@see Test_FloatsEqual).
  *
  * @param name          Name to output in assertion result.
- * @param x             First value to compare.
- * @param y             Second value to compare.
+ * @param expected      First value to compare.
+ * @param actual        Second value to compare.
  * @param threshold     Maximum allowed difference between floats.
  * @returns             True if the floats are equal within
  *                      the threshold, false otherwise.
  */
 stock bool Test_AssertFloatsEqual(
     const char[] name,
-    float x,
-    float y,
+    float expected,
+    float actual,
     float threshold = 0.0001
 )
 {
     if (! Test_OutputAssertResult(
-        Test_FloatsEqual(x, y, threshold),
+        Test_FloatsEqual(expected, actual, threshold),
         "%s == %f",
         name,
-        y
+        actual
     )) {
-        Test_Output("%s = %f", name, x);
+        Test_Output("%s = %f", name, expected);
 
         return false;
     }
@@ -649,26 +649,26 @@ stock bool Test_AssertFloatsEqual(
  * Asserts that two floats are not equal (@see Test_FloatsEqual).
  *
  * @param name          Name to output in assertion result.
- * @param x             First value to compare.
- * @param y             Second value to compare.
+ * @param expected      First value to compare.
+ * @param actual        Second value to compare.
  * @param threshold     Maximum allowed difference between floats.
  * @returns             True if the floats are not equal within
  *                      the threshold, false otherwise.
  */
 stock bool Test_AssertFloatsNotEqual(
     const char[] name,
-    float x,
-    float y,
+    float expected,
+    float actual,
     float threshold = 0.0001
 )
 {
     if (! Test_OutputAssertResult(
-        ! Test_FloatsEqual(x, y, threshold),
+        ! Test_FloatsEqual(expected, actual, threshold),
         "%s != %f",
         name,
-        y
+        actual
     )) {
-        Test_Output("%s = %f", name, x);
+        Test_Output("%s = %f", name, expected);
 
         return false;
     }
@@ -680,18 +680,18 @@ stock bool Test_AssertFloatsNotEqual(
  * Asserts that two strings are equal.
  *
  * @param name  Name to output in assertion result.
- * @param x     First string to compare.
- * @param y     Second string to compare.
- * @returns     True if the strings are equal, false otherwise.
+ * @param expected  First string to compare.
+ * @param actual    Second string to compare.
+ * @returns         True if the strings are equal, false otherwise.
  */
 stock bool Test_AssertStringsEqual(
     const char[] name,
-    const char[] x,
-    const char[] y
+    const char[] expected,
+    const char[] actual
 )
 {
-    if (! Test_OutputAssertResult(StrEqual(x, y), "%s == \"%s\"", name, y)) {
-        Test_Output("%s = \"%s\"", name, x);
+    if (! Test_OutputAssertResult(StrEqual(expected, actual), "%s == \"%s\"", name, actual)) {
+        Test_Output("%s = \"%s\"", name, expected);
 
         return false;
     }
@@ -703,18 +703,18 @@ stock bool Test_AssertStringsEqual(
  * Asserts that two strings are not equal.
  *
  * @param name  Name to output in assertion result.
- * @param x     First string to compare.
- * @param y     Second string to compare.
- * @returns     True if the strings are not equal, false otherwise.
+ * @param expected  First string to compare.
+ * @param actual    Second string to compare.
+ * @returns         True if the strings are not equal, false otherwise.
  */
 stock bool Test_AssertStringsNotEqual(
     const char[] name,
-    const char[] x,
-    const char[] y
+    const char[] expected,
+    const char[] actual
 )
 {
-    if (! Test_OutputAssertResult(! StrEqual(x, y), "%s != \"%s\"", name, y)) {
-        Test_Output("%s = \"%s\"", name, x);
+    if (! Test_OutputAssertResult(! StrEqual(expected, actual), "%s != \"%s\"", name, actual)) {
+        Test_Output("%s = \"%s\"", name, expected);
 
         return false;
     }
