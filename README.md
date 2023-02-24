@@ -8,6 +8,7 @@ Table of Contents
 
 * [Requirements](#requirements)
 * [Installation](#installation)
+* [API Reference](#api-reference)
 * [Usage](#usage)
 * [Contributing](#contributing)
 * [License](#license)
@@ -32,6 +33,10 @@ To uninstall the library, run `git rm dependencies/sm-testsuite`.
 
 ### Manually
 Download the source code for the [latest release](https://github.com/clugg/sm-testsuite/releases/latest) and move all files and directories from the [`addons/sourcemod/scripting/include`](addons/sourcemod/scripting/include) directory to your existing `addons/sourcemod/scripting/include` directory.
+
+## API Reference
+
+A comprehensive API reference is available [here](https://clugg.github.io/sm-testsuite/).
 
 ## Usage
 First, you need to include the library:

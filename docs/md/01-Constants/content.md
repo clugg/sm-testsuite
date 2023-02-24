@@ -1,0 +1,13 @@
+---
+Title: Constants
+---
+
+#- Constants
+- `_TEST_PROFILER_ENABLED` = `SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 10`
+- 
+- `_TEST_FUNCTION_WORKAROUND` = `SOURCEMOD_V_MAJOR >= 1 && SOURCEMOD_V_MINOR >= 11`
+- 
+- `TEST_PASS_SYMBOL` = `"✓"`
+- 
+- `TEST_FAIL_SYMBOL` = `"✗"`
+- 
