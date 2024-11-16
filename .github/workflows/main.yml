@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        sm_version: ['1.10', '1.11']
+        sm_version: ['1.10', '1.11', '1.12']
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
 
       - name: Setup Environment
         run: |
@@ -27,7 +27,7 @@ jobs:
         run: spcomp $SCRIPTS_PATH/testsuite_example.sp -i$includePath -i$SCRIPTS_PATH/include -O2 -t4 -v2
 
       - name: Upload Compiled Plugin
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: testsuite_example_sm${{ matrix.sm_version }}
           path: testsuite_example.smx
