@@ -10,7 +10,7 @@ jobs:
         sm_version: ['1.10', '1.11', '1.12']
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Setup Environment
         run: |
@@ -27,7 +27,7 @@ jobs:
         run: spcomp $SCRIPTS_PATH/testsuite_example.sp -i$includePath -i$SCRIPTS_PATH/include -O2 -t4 -v2
 
       - name: Upload Compiled Plugin
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: testsuite_example_sm${{ matrix.sm_version }}
           path: testsuite_example.smx
