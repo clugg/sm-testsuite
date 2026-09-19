@@ -449,7 +449,7 @@ stock void Test_Output(const char[] message, any ...)
 /**
  * Adds to the assert counters and outputs the assertion result to server.
  *
- * @param bool      Result of the assertion.
+ * @param result    Result of the assertion.
  * @param message   Message to output.
  * @param ...       Further arguments to pass to message formatter.
  * @returns         The result passed in.
@@ -587,10 +587,10 @@ stock bool Test_AssertEqual(const char[] name, any expected, any actual)
 /**
  * Asserts that two values are not equal.
  *
- * @param name  Name to output in assertion result.
- * @param expected     First value to compare.
- * @param actual     Second value to compare.
- * @returns     True if the values are not equal, false otherwise.
+ * @param name      Name to output in assertion result.
+ * @param expected  First value to compare.
+ * @param actual    Second value to compare.
+ * @returns         True if the values are not equal, false otherwise.
  */
 stock bool Test_AssertNotEqual(const char[] name, any expected, any actual)
 {
