@@ -87,7 +87,7 @@ Test_AssertStringsNotEqual("string", "hello", "world");
 `Test_AssertFloatsEqual` accepts an optional fourth parameter to set the threshold under which floats are considered equal. This is used to combat [floating point errors](https://en.wikipedia.org/wiki/Floating_point_error_mitigation) and has been set to a sensible default.
 
 ### Customising Output
-Each section's tests and results are outputted within a box shape. The box has a default width of 64, but you can change it per-section if you'd like your the box to better fit your test output.
+Each section's tests and results are outputted within a box shape. The box has a default width of 64, but you can change it per-section if you'd like the box to better fit your test output.
 
 ```c
 Test_SetBoxWidth(32);
