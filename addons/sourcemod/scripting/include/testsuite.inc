@@ -251,7 +251,10 @@ stock void Test_EndSection()
     if (__test_testsTotal > 0) {
         strcopy(output, sizeof(output), "Tests: ");
 
+        bool hasOutput = false;
+
         if (__test_testsPassed > 0) {
+            hasOutput = true;
             Format(
                 output,
                 sizeof(output),
@@ -259,13 +262,14 @@ stock void Test_EndSection()
                 output,
                 __test_testsPassed
             );
-
-            if (__test_testsFailed > 0) {
-                StrCat(output, sizeof(output), " / ");
-            }
         }
 
         if (__test_testsFailed > 0) {
+            if (hasOutput) {
+                StrCat(output, sizeof(output), " / ");
+            }
+
+            hasOutput = true;
             Format(
                 output,
                 sizeof(output),
@@ -329,8 +333,10 @@ stock bool Test_AfterRun()
         strcopy(output, sizeof(output), "Assertions: ");
 
         int assertionsFailed = __test_assertionsTotal - __test_assertionsPassed;
+        bool hasOutput = false;
 
         if (__test_assertionsPassed > 0) {
+            hasOutput = true;
             Format(
                 output,
                 sizeof(output),
@@ -338,13 +344,14 @@ stock bool Test_AfterRun()
                 output,
                 __test_assertionsPassed
             );
-
-            if (assertionsFailed > 0) {
-                StrCat(output, sizeof(output), " / ");
-            }
         }
 
         if (assertionsFailed > 0) {
+            if (hasOutput) {
+                StrCat(output, sizeof(output), " / ");
+            }
+
+            hasOutput = true;
             Format(
                 output,
                 sizeof(output),
