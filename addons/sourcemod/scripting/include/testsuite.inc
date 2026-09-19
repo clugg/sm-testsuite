@@ -208,6 +208,7 @@ stock void Test_PrintSeparator(int separator = '-')
 
 static int __test_testsTotal = 0;
 static int __test_testsPassed = 0;
+static int __test_testsFailed = 0;
 
 /**
  * Resets the test counters to 0 and outputs the section name to the server.
@@ -219,6 +220,7 @@ stock void Test_StartSection(const char[] name)
 {
     __test_testsTotal = 0;
     __test_testsPassed = 0;
+    __test_testsFailed = 0;
 
     Test_PrintSeparator();
     Test_PrintCentered("%s", name);
@@ -249,8 +251,6 @@ stock void Test_EndSection()
     if (__test_testsTotal > 0) {
         strcopy(output, sizeof(output), "Tests: ");
 
-        int testsFailed = __test_testsTotal - __test_testsPassed;
-
         if (__test_testsPassed > 0) {
             Format(
                 output,
@@ -260,18 +260,18 @@ stock void Test_EndSection()
                 __test_testsPassed
             );
 
-            if (testsFailed > 0) {
+            if (__test_testsFailed > 0) {
                 StrCat(output, sizeof(output), " / ");
             }
         }
 
-        if (testsFailed > 0) {
+        if (__test_testsFailed > 0) {
             Format(
                 output,
                 sizeof(output),
                 "%s%d failed",
                 output,
-                testsFailed
+                __test_testsFailed
             );
         }
     } else {
@@ -320,6 +320,8 @@ stock bool Test_AfterRun()
     __test_testsTotal += 1;
     if (passed) {
         __test_testsPassed += 1;
+    } else {
+        __test_testsFailed += 1;
     }
 
     if (__test_assertionsTotal > 0) {
