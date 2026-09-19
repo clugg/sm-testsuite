@@ -45,7 +45,7 @@ public Plugin myinfo = {
     url = "https://github.com/clugg/sm-testsuite"
 };
 
-void it_has_no_asserts()
+void it_has_no_assertions()
 {
     Test_Output("I have no strong feelings one way or the other.");
 }
@@ -88,18 +88,22 @@ void it_should_fail_some()
 
 public void OnPluginStart()
 {
-    Test_SetBoxWidth(56);
+    Test_SetBoxWidth(36);
     Test_StartSection("passing section");
-    Test_Run("it_has_no_asserts", it_has_no_asserts);
     Test_Run("it_should_pass_all", it_should_pass_all);
     Test_EndSection();
 
-    Test_SetBoxWidth(36);
     Test_StartSection("failing section");
     Test_Run("it_should_fail_all", it_should_fail_all);
     Test_EndSection();
 
-    Test_StartSection("both section");
+    Test_SetBoxWidth(56);
+    Test_StartSection("no assertions section");
+    Test_Run("it_has_no_assertions", it_has_no_assertions);
+    Test_EndSection();
+
+    Test_StartSection("all section");
+    Test_Run("it_has_no_assertions", it_has_no_assertions);
     Test_Run("it_should_pass_all", it_should_pass_all);
     Test_Run("it_should_fail_all", it_should_fail_all);
     Test_Run("it_should_fail_some", it_should_fail_some);

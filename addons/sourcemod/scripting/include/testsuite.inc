@@ -51,6 +51,7 @@ static Profiler __test_profiler = null;
 
 #define TEST_PASS_SYMBOL "✓"
 #define TEST_FAIL_SYMBOL "✗"
+#define TEST_NO_ASSERTION_SYMBOL "!"
 
 static int __test_boxWidth = 64;
 
@@ -209,6 +210,7 @@ stock void Test_PrintSeparator(int separator = '-')
 static int __test_testsTotal = 0;
 static int __test_testsPassed = 0;
 static int __test_testsFailed = 0;
+static int __test_testsWithNoAssertions = 0;
 
 /**
  * Resets the test counters to 0 and outputs the section name to the server.
@@ -221,6 +223,7 @@ stock void Test_StartSection(const char[] name)
     __test_testsTotal = 0;
     __test_testsPassed = 0;
     __test_testsFailed = 0;
+    __test_testsWithNoAssertions = 0;
 
     Test_PrintSeparator();
     Test_PrintCentered("%s", name);
@@ -278,6 +281,21 @@ stock void Test_EndSection()
                 __test_testsFailed
             );
         }
+
+        if (__test_testsWithNoAssertions > 0) {
+            if (hasOutput) {
+                StrCat(output, sizeof(output), " / ");
+            }
+
+            hasOutput = true;
+            Format(
+                output,
+                sizeof(output),
+                "%s%d with no assertions",
+                output,
+                __test_testsWithNoAssertions
+            );
+        }
     } else {
         strcopy(output, sizeof(output), "No tests run!");
     }
@@ -322,13 +340,14 @@ stock bool Test_AfterRun()
 {
     bool passed = Test_IsPassing();
     __test_testsTotal += 1;
-    if (passed) {
-        __test_testsPassed += 1;
-    } else {
-        __test_testsFailed += 1;
-    }
 
     if (__test_assertionsTotal > 0) {
+        if (passed) {
+            __test_testsPassed += 1;
+        } else {
+            __test_testsFailed += 1;
+        }
+
         char output[1024];
         strcopy(output, sizeof(output), "Assertions: ");
 
@@ -362,13 +381,16 @@ stock bool Test_AfterRun()
         }
 
         Test_Print("%s", output);
+        Test_Print(
+            "%s %s",
+            passed ? TEST_PASS_SYMBOL : TEST_FAIL_SYMBOL,
+            passed ? "PASS" : "FAIL"
+        );
+    } else {
+        __test_testsWithNoAssertions += 1;
+        Test_Print("%s %s", TEST_NO_ASSERTION_SYMBOL, "NO ASSERTIONS");
     }
 
-    Test_Print(
-        "%s %s",
-        passed ? TEST_PASS_SYMBOL : TEST_FAIL_SYMBOL,
-        passed ? "PASS" : "FAIL"
-    );
     Test_Print("");
     Test_PrintSeparator();
 
